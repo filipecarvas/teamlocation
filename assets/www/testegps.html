@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript" charset="utf-8" src="cordova-2.7.0.js"></script>
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbg6QOrKUayB6mHdQQOW8BMmU358ZJ9wc&sensor=true"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery.ui.map.js"></script>
+		<script type="text/javascript" src="js/jquery.ui.map.extensions.js"></script>
+		
+		<style type="text/css">
+			html, body, #map-canvas {
+				margin: 0;
+				padding: 0;
+				height: 100%;
+			}
+		</style>
+		
+		<script type="text/javascript" charset="utf-8">
+		
+
+			// Wait for Cordova to load
+			function onLoad() 
+			{
+				document.addEventListener("deviceready", onDeviceReady, false);
+			}
+			
+			// Cordova is ready
+			function onDeviceReady() 
+			{
+				alert("Pronto!");
+				GPS();
+			}
+			
+			function GPS() 
+			{
+				alert("GPS");
+				var mapOptions = {
+					zoom: 18,
+					mapTypeId: google.maps.MapTypeId.ROADMAP
+				};
+				map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+				
+				if(navigator.geolocation) {
+					alert("AQUI");
+					navigator.geolocation.getCurrentPosition(function(position) {
+						alert("AQUI2");
+					  var pos = new google.maps.LatLng(position.coords.latitude,
+													   position.coords.longitude);
+
+					  var infowindow = new google.maps.InfoWindow({
+						map: map,
+						position: pos,
+						content: 'Your Location.'
+					  });
+
+					  map.setCenter(pos);
+					}, function() {
+					  handleNoGeolocation(true);
+					});
+				} else {
+					// Browser doesn't support Geolocation
+					handleNoGeolocation(false);
+				  }
+			}
+			
+			function handleNoGeolocation(errorFlag) {
+			  if (errorFlag) {
+				var content = 'Error: The Geolocation service failed.';
+			  } else {
+				var content = 'Error: Your browser doesn\'t support geolocation.';
+			  }
+
+			  var options = {
+				map: map,
+				position: new google.maps.LatLng(60, 105),
+				content: content
+			  };
+
+			  var infowindow = new google.maps.InfoWindow(options);
+			  map.setCenter(options.position);
+			}
+			google.maps.event.addDomListener(window, 'load', gps);
+
+			
+		</script>
+	</head>
+	
+	<body onload="GPS()">
+		<div id="map-canvas"></div>
+	</body>
+</html>

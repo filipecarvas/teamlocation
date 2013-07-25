@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <title></title>
+  
+  <link rel="stylesheet" href="https://d10ajoocuyu32n.cloudfront.net/mobile/1.3.1/jquery.mobile-1.3.1.min.css">
+  <link rel="stylesheet" href="css/styleoptinial.css">
+  
+  <!-- Extra Codiqa features -->
+  <link rel="stylesheet" href="codiqa.ext.css">
+  
+  <!-- jQuery and jQuery Mobile -->
+  <script src="js/jquery-1.9.1.min.js"></script>
+  <script src="js/jquery.mobile-1.3.1.min.js"></script>
+
+  <!-- Extra Codiqa features -->
+  <script src="js/codiqa.ext.js"></script>
+   
+</head>
+<body>
+<!-- Home -->
+<div data-role="page" id="page1">
+    <div data-theme="a" data-role="header">
+        <h3>
+            
+        </h3>
+		<a data-role="button" data-theme="b" data-inline="true" data-rel="back" data-transition="none"
+        href="#page1" data-icon="back" data-iconpos="left">
+            Back
+        </a>
+		<a data-theme="g" data-role="button" data-inline="true" class="ui-btn-right" data-icon="home" href="choose.html">
+			Home
+		</a>
+    </div>
+    <div data-role="content">
+        <h3>
+            Reinaldo Ferreira's location
+        </h3>
+        <ul data-role="listview" data-divider-theme="b" data-inset="true">
+            <li data-role="list-divider" role="heading">
+                Options
+            </li>
+            <li data-theme="">
+                <a onclick="location.href='infoReinaldo.html'" data-transition="none">
+                    Check where is him
+                </a>
+            </li>
+            <li data-theme="c">
+                <a href="#page1" data-transition="none">
+                    Track him
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div data-theme="a" data-role="footer" data-position="fixed">
+        <h3>
+            team.location 2013
+        </h3>
+    </div>
+</div>
+</body>
+</html>

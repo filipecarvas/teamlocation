@@ -54,7 +54,18 @@ h1
 	display: none;
 }
 
-img 
+.img-exit
+{
+	position: fixed;
+	top: 10px;
+	right: 10px;
+	width: 3px; 
+	height: 3px;
+	
+	cursor: pointer;
+}
+
+.img-location
 {
 	display: block;
     margin-left: auto;

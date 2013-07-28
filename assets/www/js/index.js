@@ -104,7 +104,7 @@ function Log(str)
 	var Data = '"' + getTime() + '"';
 	
 	var User2 = sessionStorage.getItem('sessionEmail');
-	alert(User2);
+	//alert(User2);
 	var Estado = str;
 	var Coordenadas = getCoord();
 		
@@ -248,3 +248,15 @@ function getCoord()
 	return str;
 }
 
+function Exit() 
+{
+	var retVal = confirm("Do you really want to exit?");
+	if (retVal == true)
+	{
+	  navigator.app.exitApp();
+	  return true;
+	} else
+	{
+	  return false;
+	}
+}

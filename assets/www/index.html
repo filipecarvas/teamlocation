@@ -9,10 +9,15 @@
 		<!-- jQuery and jQuery Mobile -->
 		<script src="js/jquery-1.9.1.min.js"></script>
 		<script src="js/jquery.mobile-1.3.1.min.js"></script>
+		
+		<script type="text/javascript" charset="utf-8" src="cordova-2.7.0.js"></script>
 	</head>
 	
 	<body onload="RemoverSpan()">
 		<div id="form-login">
+			<div>
+				<img class="img-exit" src="icons/exit-icon.png" onclick="Exit()" >
+			</div>
 			<div>
 				<img class="img-location"src="icons/location-icon.png" >
 			</div>
@@ -28,5 +33,6 @@
 			<input value="Log In" type="submit" onclick="Login()"/>	
 		</div>
 		<script type="text/javascript" src="js/login.js"></script>
+		<script type="text/javascript" src="js/index.js"></script>
 	</body>
 </html>

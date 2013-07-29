@@ -96,7 +96,9 @@ function bt_OfflineClick()
 	// Colocar cores em offline
 	document.getElementById("span-offline").style.boxShadow = "inset 0px 1px 0px 0px rgba(250,250,250,0.5), 0px 0px 2px 2px rgba(104,104,104,0.5)";
 	document.getElementById("span-offline").style.backgroundColor = "rgb(104,104,104)";
+	// Log
 	status = "Offline";
+	Log(status);
 	// Remover div mapa
 	var div = document.getElementById("map");
 	div.parentNode.removeChild(div);

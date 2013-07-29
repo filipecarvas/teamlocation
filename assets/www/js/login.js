@@ -21,8 +21,6 @@ function Login()
 	
 	$.ajax({
                 type: 'POST'
-				
-				
                 , url: "http://m2m.planetavirtual.pt/WebService/MobileM2M.asmx/Login"
                 , contentType: 'application/json; charset=utf-8'
                 , dataType: 'json'

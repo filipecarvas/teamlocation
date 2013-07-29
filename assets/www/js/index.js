@@ -49,8 +49,11 @@ function bt_AvailableClick()
 	document.getElementById("span-available").style.backgroundColor = "rgb(135,187,83)";
 	status = "Disponivel";
 	// Verificar se div do mapa existe
-	if (!document.getElementById("map"))
+	if (document.getElementById("map"))
 	{
+		// Remover div mapa
+		var div = document.getElementById("map");
+		div.parentNode.removeChild(div);
 		getLocation();
 	}
 }
@@ -67,8 +70,11 @@ function bt_BusyClick()
 	document.getElementById("span-busy").style.boxShadow = "inset 0px 1px 0px 0px rgba(250,250,250,0.5), 0px 0px 3px 2px rgba(226,0,0,0.5)";
 	document.getElementById("span-busy").style.backgroundColor = "rgb(226,0,0)";
 	status = "Ocupado";
-	if (!document.getElementById("map"))
+	if (document.getElementById("map"))
 	{
+		// Remover div mapa
+		var div = document.getElementById("map");
+		div.parentNode.removeChild(div);
 		getLocation();
 	}
 }

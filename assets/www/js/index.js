@@ -31,10 +31,10 @@
 };
 */
 
-var address = nul;
-var status = null;
-var Latitude = null;
-var Longitude = null;
+var address;
+var status;
+var Latitude;
+var Longitude;
 
 function bt_AvailableClick() 
 {
@@ -47,13 +47,12 @@ function bt_AvailableClick()
 	// Colocar cores em available
 	document.getElementById("span-available").style.boxShadow = "inset 0px 1px 0px 0px rgba(250,250,250,0.5), 0px 0px 3px 2px rgba(135,187,83,0.5)";
 	document.getElementById("span-available").style.backgroundColor = "rgb(135,187,83)";
+	status = "Disponivel";
 	// Verificar se div do mapa existe
 	if (!document.getElementById("map"))
 	{
 		getLocation();
 	}
-	// Inserir em BD
-	status = "Disponivel";
 }
 
 function bt_BusyClick() 
@@ -67,12 +66,11 @@ function bt_BusyClick()
 	// Colocar cores em busy
 	document.getElementById("span-busy").style.boxShadow = "inset 0px 1px 0px 0px rgba(250,250,250,0.5), 0px 0px 3px 2px rgba(226,0,0,0.5)";
 	document.getElementById("span-busy").style.backgroundColor = "rgb(226,0,0)";
+	status = "Ocupado";
 	if (!document.getElementById("map"))
 	{
 		getLocation();
 	}
-	// Inserir em BD
-	status = "Ocupado";
 }
 
 function bt_OfflineClick() 
@@ -86,7 +84,6 @@ function bt_OfflineClick()
 	// Colocar cores em offline
 	document.getElementById("span-offline").style.boxShadow = "inset 0px 1px 0px 0px rgba(250,250,250,0.5), 0px 0px 2px 2px rgba(104,104,104,0.5)";
 	document.getElementById("span-offline").style.backgroundColor = "rgb(104,104,104)";
-	// Log
 	status = "Offline";
 	// Remover div mapa
 	var div = document.getElementById("map");
@@ -156,12 +153,12 @@ function getLocation()
 		var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 		Latit = position.coords.latitude;
 		Longit = position.coords.longitude;
-		// Inserir BD
-		Log(status);
 		alert(Latit);
 		alert(Longit);
 		// Colocar Coordenadas em var global
 		setCoord(Latit,Longit);
+		// Inserir BD
+		Log(status);
 		//Criar div após saber localização
 		$('#location').after('<div id="map"></div>');
 		//$('#map').before('<br />');

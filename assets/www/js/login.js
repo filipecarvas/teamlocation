@@ -1,6 +1,7 @@
 // Login App mobile
 
 var email;
+var el = document.getElementById("canvasloader-container");
 
 function Login() 
 {	
@@ -32,17 +33,17 @@ function Login()
 					if (data.d) 
 					{
 						alert("Login successful!");
-						
 						sessionStorage.setItem('sessionEmail', document.getElementById("email").value); 	
-						window.location = "choose.html";
-										
+						window.location = "choose.html";									
 					} else 
 					{
 						alert("Invalid login!");
+						el.style.display = 'none';
 					}
                 }
                 , error: function (xmlHttpRequest, status, err) {
                     alert(err.d);
+					el.style.display = 'none';
                 }
             });	
 }

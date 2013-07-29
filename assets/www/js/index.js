@@ -31,9 +31,10 @@
 };
 */
 
-var address;
-var Latitude;
-var Longitude;
+var address = nul;
+var status = null;
+var Latitude = null;
+var Longitude = null;
 
 function bt_AvailableClick() 
 {
@@ -52,7 +53,7 @@ function bt_AvailableClick()
 		getLocation();
 	}
 	// Inserir em BD
-	Log("Disponivel");
+	status = "Disponivel";
 }
 
 function bt_BusyClick() 
@@ -71,7 +72,7 @@ function bt_BusyClick()
 		getLocation();
 	}
 	// Inserir em BD
-	Log("Ocupado");
+	status = "Ocupado";
 }
 
 function bt_OfflineClick() 
@@ -86,7 +87,7 @@ function bt_OfflineClick()
 	document.getElementById("span-offline").style.boxShadow = "inset 0px 1px 0px 0px rgba(250,250,250,0.5), 0px 0px 2px 2px rgba(104,104,104,0.5)";
 	document.getElementById("span-offline").style.backgroundColor = "rgb(104,104,104)";
 	// Log
-	Log("Offline");
+	status = "Offline";
 	// Remover div mapa
 	var div = document.getElementById("map");
 	div.parentNode.removeChild(div);
@@ -155,6 +156,8 @@ function getLocation()
 		var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 		Latit = position.coords.latitude;
 		Longit = position.coords.longitude;
+		// Inserir BD
+		Log(status);
 		alert(Latit);
 		alert(Longit);
 		// Colocar Coordenadas em var global

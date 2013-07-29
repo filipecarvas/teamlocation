@@ -32,15 +32,15 @@
 }
 
 #popup_content.alert {
-	background-image: url('../images/info.gif');
+	background-image: url('../img/info.gif');
 }
 
 #popup_content.confirm {
-	background-image: url('../images/important.gif');
+	background-image: url('../img/important.gif');
 }
 
 #popup_content.prompt {
-	background-image: url('../images/help.gif');
+	background-image: url('../img/help.gif');
 }
 
 #popup_message {

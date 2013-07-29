@@ -34,6 +34,7 @@ function Login()
 					if (data.d) 
 					{
 						alert("Login successful!");
+						
 						sessionStorage.setItem('sessionEmail', document.getElementById("email").value); 	
 						window.location = "choose.html";
 										

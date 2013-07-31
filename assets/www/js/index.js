@@ -274,3 +274,44 @@ function Exit()
 	  return false;
 	}
 }
+
+function ChangePassword() 
+{
+	var Email = '"' + sessionStorage.getItem('sessionEmail') + '"';
+	var Old_pw = '"' + document.getElementById("old_password") + '"';
+	var Password1 = '"' + document.getElementById("new_password1") + '"';
+	var Password2 = '"' + document.getElementById("new_password2") + '"';
+	
+	// Verificar se a nova password pretendida é a mesma nos dois campos
+	if (Password1 == Password2) 
+	{
+		$.support.cors = true;
+		$.mobile.allowCrossDomainPages = true;
+	
+		$.ajax({
+					type: 'POST'	
+					, url: "http://m2m.planetavirtual.pt/WebService/MobileM2M.asmx/AlterarPassword"
+					, contentType: 'application/json; charset=utf-8'
+					, dataType: 'json'
+					, data: '{ "Email":' + email + ',"PasswordAntiga":' + Old_pw + ',"PasswordNova":' + Password1 + ' }'
+					, crossDomain: true
+					, success: function (data, status) {
+						alert(data.d);
+						if (data.d) 
+						{
+							alert("Password changed!");					
+						} else 
+						{
+							alert("Invalid password!");
+						}
+					}
+					, error: function (xmlHttpRequest, status, err) 
+					{
+						alert(err.d);
+					}
+		});	
+	} else 
+	{
+		alert("Invalid new password!");
+	}
+}

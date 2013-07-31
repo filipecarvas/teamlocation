@@ -277,6 +277,7 @@ function Exit()
 
 function ChangePassword() 
 {
+	alert("ENT");
 	var Email = '"' + sessionStorage.getItem('sessionEmail') + '"';
 	var Old_pw = '"' + document.getElementById("old_password") + '"';
 	var Password1 = '"' + document.getElementById("new_password1") + '"';
@@ -293,7 +294,7 @@ function ChangePassword()
 					, url: "http://m2m.planetavirtual.pt/WebService/MobileM2M.asmx/AlterarPassword"
 					, contentType: 'application/json; charset=utf-8'
 					, dataType: 'json'
-					, data: '{ "Email":' + email + ',"PasswordAntiga":' + Old_pw + ',"PasswordNova":' + Password1 + ' }'
+					, data: '{ "Email":' + Email + ',"PasswordAntiga":' + Old_pw + ',"PasswordNova":' + Password1 + ' }'
 					, crossDomain: true
 					, success: function (data, status) {
 						alert(data.d);

@@ -2,6 +2,7 @@
 
 var email;
 var el = document.getElementById("canvasloader-container");
+//el.style.display = 'block';
 
 function Login() 
 {	
@@ -34,7 +35,8 @@ function Login()
 					{
 						alert("Login successful!");
 						sessionStorage.setItem('sessionEmail', document.getElementById("email").value); 	
-						window.location = "choose.html";									
+						window.location = "choose.html";	
+						el.style.display = 'none';					
 					} else 
 					{
 						alert("Invalid login!");

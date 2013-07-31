@@ -301,7 +301,7 @@ function ChangePassword()
 					, data: '{ "Email":' + Email + ',"PasswordAntiga":' + Old_pw + ',"PasswordNova":' + Password1 + ' }'
 					, crossDomain: true
 					, success: function (data, status) {
-						alert(data.d);
+						//alert(data.d);
 						if (data.d) 
 						{
 							alert("Password changed!");					
@@ -319,4 +319,37 @@ function ChangePassword()
 	{
 		alert("Invalid new password!");
 	}
+}
+
+function ChangeEmail() 
+{
+	var Email = '"' + sessionStorage.getItem('sessionEmail') + '"';
+	var NewEmail = '"' + document.getElementById("new_email").value  + '"';
+	var Password = '"' + document.getElementById("password").value  + '"';
+	
+	$.support.cors = true;
+	$.mobile.allowCrossDomainPages = true;
+	
+	$.ajax({
+			type: 'POST'	
+			, url: "http://m2m.planetavirtual.pt/WebService/MobileM2M.asmx/AlterarEmail"
+			, contentType: 'application/json; charset=utf-8'
+			, dataType: 'json'
+			, data: '{ "Email":' + Email + ',"NovoEmail":' + NewEmail + ',"Password":' + Password + ' }'
+			, crossDomain: true
+			, success: function (data, status) {
+					//alert(data.d);
+					if (data.d) 
+					{
+						alert("Email changed!");					
+					} else 
+					{
+						alert("Invalid email or password!");
+					}
+				}
+				, error: function (xmlHttpRequest, status, err) 
+				{
+					alert(err.d);
+				}
+	});	
 }

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	  <meta charset="utf-8">
+	  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	  <meta name="apple-mobile-web-app-capable" content="yes">
+	  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	  
+	  <link rel="stylesheet" href="https://d10ajoocuyu32n.cloudfront.net/mobile/1.3.1/jquery.mobile-1.3.1.min.css">
+	  <link rel="stylesheet" href="css/styleoptinial.css">
+	  
+	  <!-- jQuery and jQuery Mobile -->
+	  <script src="js/jquery-1.9.1.min.js"></script>
+	  <script src="js/jquery.mobile-1.3.1.min.js"></script>
+
+	  <!-- Extra Codiqa features -->
+	  <script src="js/codiqa.ext.js"></script>
+	   
+	</head>
+	<body>
+		<!-- Home -->
+		<div data-role="page" id="page1">
+			<div data-theme="a" data-role="header" data-position="fixed">
+				<h3>
+					Header
+				</h3>
+				<a data-role="button" data-theme="b" data-inline="true" data-rel="back" data-transition="none" href="#page1" data-icon="back" data-iconpos="left">
+					Back
+				</a>
+				<a data-theme="g" data-role="button" data-inline="true" class="ui-btn-right" data-icon="home" href="choose.html" data-transition="none">
+					Home
+				</a>
+			</div>
+			<div data-role="content">
+				<h3>
+					Change email
+				</h3>
+				<div data-role="fieldcontain">
+					<label>
+						New email
+					</label>
+					<input id="new_email" placeholder="Enter your new email" type="email">
+				</div>
+				<div data-role="fieldcontain">
+					<label>
+						Password
+					</label>
+					<input id="password" placeholder="Password" type="password">
+				</div>
+				<input data-theme="b" value="Save" type="submit" onclick="ChangeEmail()">
+			</div>
+			<div data-theme="a" data-role="footer" data-position="fixed">
+				<h3>
+					team.location 2013
+				</h3>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/index.js"></script>
+	</body>
+</html>

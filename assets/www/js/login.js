@@ -1,7 +1,6 @@
 // Login App mobile
 
 var email;
-var el = document.getElementById("canvasloader-container");
 
 function Login() 
 {	
@@ -22,6 +21,8 @@ function Login()
 	
 	$.ajax({
                 type: 'POST'
+				
+				
                 , url: "http://m2m.planetavirtual.pt/WebService/MobileM2M.asmx/Login"
                 , contentType: 'application/json; charset=utf-8'
                 , dataType: 'json'
@@ -34,17 +35,15 @@ function Login()
 					{
 						alert("Login successful!");
 						sessionStorage.setItem('sessionEmail', document.getElementById("email").value); 	
-						window.location = "choose.html";	
-						//el.style.display = 'none';					
+						window.location = "choose.html";
+										
 					} else 
 					{
 						alert("Invalid login!");
-						//el.style.display = 'none';
 					}
                 }
                 , error: function (xmlHttpRequest, status, err) {
                     alert(err.d);
-					//el.style.display = 'none';
                 }
             });	
 }

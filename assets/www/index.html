@@ -3,44 +3,16 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Login</title>
-		<script type="text/javascript" charset="utf-8" src="cordova-2.7.0.js"></script>
+		
 		<link rel="stylesheet" type="text/css" href="css/login.css" />
 		  
 		<!-- jQuery and jQuery Mobile -->
 		<script src="js/jquery-1.9.1.min.js"></script>
 		<script src="js/jquery.mobile-1.3.1.min.js"></script>
-		
-		<!-- File to loader -->
-		<script src="http://heartcode-canvasloader.googlecode.com/files/heartcode-canvasloader-min-0.9.1.js"></script>
-		
-		<script type="text/javascript">
-		
-			function Loader()
-			{
-				var cl = new CanvasLoader('canvasloader-container');
-				cl.setShape('spiral'); // default is 'oval'
-				cl.setDiameter(49); // default is 40
-				cl.setDensity(47); // default is 40
-				cl.setRange(1.2); // default is 1.3
-				cl.setSpeed(3); // default is 2
-				cl.setFPS(19); // default is 24
-				cl.show(); // Hidden by default
-					
-				// This bit is only for positioning - not necessary
-				 var loaderObj = document.getElementById("canvasLoader");
-				loaderObj.style.position = "absolute";
-				loaderObj.style["top"] = cl.getDiameter() * -0.5 + "px";
-				loaderObj.style["left"] = cl.getDiameter() * -0.5 + "px";
-			}
-		</script>
 	</head>
 	
 	<body onload="RemoverSpan()">
 		<div id="form-login">
-			<div id="canvasloader-container" class="wrapper"></div>
-			<div>
-				<img class="img-exit" src="icons/exit-icon.png" onclick="Exit()" >
-			</div>
 			<div>
 				<img class="img-location"src="icons/location-icon.png" >
 			</div>
@@ -53,17 +25,8 @@
 			</div>
 			<input type="text" id="email" placeholder="Email adress" />
 			<input type="password" id="password" placeholder="Password" />
-			<input value="Log In" type="submit" onclick="Login();Loader()"/>
-			<br />
-			<br />
-			<div class="connect">
-                <p>Or connect with:</p>
-                <p>
-                    <a href="">facebook</a>
-                </p>
-            </div>
+			<input value="Log In" type="submit" onclick="Login()"/>	
 		</div>
 		<script type="text/javascript" src="js/login.js"></script>
-		<script type="text/javascript" src="js/index.js"></script>
 	</body>
 </html>

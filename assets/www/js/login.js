@@ -2,7 +2,6 @@
 
 var email;
 var el = document.getElementById("canvasloader-container");
-//el.style.display = 'block';
 
 function Login() 
 {	
@@ -36,16 +35,16 @@ function Login()
 						alert("Login successful!");
 						sessionStorage.setItem('sessionEmail', document.getElementById("email").value); 	
 						window.location = "choose.html";	
-						el.style.display = 'none';					
+						//el.style.display = 'none';					
 					} else 
 					{
 						alert("Invalid login!");
-						el.style.display = 'none';
+						//el.style.display = 'none';
 					}
                 }
                 , error: function (xmlHttpRequest, status, err) {
                     alert(err.d);
-					el.style.display = 'none';
+					//el.style.display = 'none';
                 }
             });	
 }

@@ -20,10 +20,8 @@ function Login()
 	$.mobile.allowCrossDomainPages = true;
 	
 	$.ajax({
-                type: 'POST'
-				
-				
-                , url: "http://m2m.planetavirtual.pt/WebService/MobileM2M.asmx/Login"
+                type: 'POST'	
+                , url: "http://m2m.planetavirtual.pt/WebService/MobileM2M.asmx/Hello2"
                 , contentType: 'application/json; charset=utf-8'
                 , dataType: 'json'
                 //, data: '{ "Email":"filipe@mail.com","Password":"123" }'

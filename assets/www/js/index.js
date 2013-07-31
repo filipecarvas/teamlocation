@@ -277,11 +277,15 @@ function Exit()
 
 function ChangePassword() 
 {
-	alert("ENT");
+	//alert("ENT");
 	var Email = '"' + sessionStorage.getItem('sessionEmail') + '"';
-	var Old_pw = '"' + document.getElementById("old_password") + '"';
-	var Password1 = '"' + document.getElementById("new_password1") + '"';
-	var Password2 = '"' + document.getElementById("new_password2") + '"';
+	var Old_pw = '"' + document.getElementById("old_password").value  + '"';
+	var Password1 = '"' + document.getElementById("new_password1").value  + '"';
+	var Password2 = '"' + document.getElementById("new_password2").value  + '"';
+	//alert(Email);
+	//alert(Old_pw);
+	//alert(Password1);
+	//alert(Password2);
 	
 	// Verificar se a nova password pretendida é a mesma nos dois campos
 	if (Password1 == Password2) 

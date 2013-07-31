@@ -28,7 +28,7 @@ function Login()
 				, data: '{ "Email":' + email + ',"Password":' + password +' }'
 				, crossDomain: true
                 , success: function (data, status) {
-					//alert(data.d);
+					alert(data.d);
 					if (data.d) 
 					{
 						alert("Login successful!");

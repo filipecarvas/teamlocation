@@ -383,7 +383,7 @@ function GetNames()
 			, success: function (data, status) {
 					alert("SUCESSO!");
 					//var result = new Array();
-					alert(JSON.stringify(aCustomers));
+					alert(JSON.stringify(data.d));
 					//result = data.d;
 					//alert("Nome: " + data.d.[0]);
 				}

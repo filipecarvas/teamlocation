@@ -254,9 +254,18 @@ function getDate()
         var time = new Date();
         var year = time.getFullYear();
         var month = time.getMonth() + 1;
-        var date = time.getDate();
+        var day = time.getDate();
 		
-		return year + "-" + month + "-" + date;		
+		if (month < 10)
+		{
+			month = "0" + month;
+		}
+		
+		if (day < 10)
+		{
+			day = "0" + day;
+		}
+		return year + "-" + month + "-" + day;		
 }
 
 // Colocar Coordenadas em var global
@@ -369,6 +378,7 @@ function GetNames()
 {
 	alert("Entrou GET NAMES");
 	var Data = '"' + getDate() + '"';
+	alert("Data: " + Data);
 	
 	$.support.cors = true;
 	$.mobile.allowCrossDomainPages = true;

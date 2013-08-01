@@ -381,10 +381,11 @@ function GetNames()
 			, data: '{ "Data":' + Data + ' }'
 			, crossDomain: true
 			, success: function (data, status) {
-					alert(SUCESSO!);
-					var result = new Array();
-					result = data.d;
-					alert("Nome: " + data.d.[0]);
+					alert("SUCESSO!");
+					//var result = new Array();
+					alert(JSON.stringify(aCustomers));
+					//result = data.d;
+					//alert("Nome: " + data.d.[0]);
 				}
 				, error: function (xmlHttpRequest, status, err) 
 				{

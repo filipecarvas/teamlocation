@@ -221,7 +221,7 @@ function getLocation()
 			var latlng = new google.maps.LatLng(Latitude, Longitude);
 			geocoder.geocode({'latLng': latlng}, function(results, status) {
 			  if (status == google.maps.GeocoderStatus.OK) {
-				address = results[1].formatted_address;
+				address = results[0].formatted_address;
 				var div = document.getElementById('location');
 				div.innerHTML = '<p><b>Location: </b>' + address + '</p>';
 				infowindow.setContent(results[1].formatted_address);
@@ -233,7 +233,7 @@ function getLocation()
 		}
 }
 
-// Obter Data
+// Obter Data e Horas
 function getTime()
 {
         var time = new Date();
@@ -246,6 +246,17 @@ function getTime()
 		var milisec = time.getMilliseconds();
 		
 		return year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds + "." + milisec;   
+}
+
+// Obter Data
+function getDate()
+{
+        var time = new Date();
+        var year = time.getFullYear();
+        var month = time.getMonth() + 1;
+        var date = time.getDate();
+		
+		return year + "-" + month + "-" + date;		
 }
 
 // Colocar Coordenadas em var global
@@ -346,6 +357,34 @@ function ChangeEmail()
 					{
 						alert("Invalid email or password!");
 					}
+				}
+				, error: function (xmlHttpRequest, status, err) 
+				{
+					alert(err.d);
+				}
+	});	
+}
+
+function GetNames()
+{
+	alert("Entrou GET NAMES");
+	var Data = '"' + getDate() + '"';
+	
+	$.support.cors = true;
+	$.mobile.allowCrossDomainPages = true;
+	
+	$.ajax({
+			type: 'POST'	
+			, url: "http://m2m.planetavirtual.pt/WebService/MobileM2M.asmx/GetNames"
+			, contentType: 'application/json; charset=utf-8'
+			, dataType: 'json'
+			, data: '{ "Data":' + Data + ' }'
+			, crossDomain: true
+			, success: function (data, status) {
+					alert(SUCESSO!);
+					var result = new Array();
+					result = data.d;
+					alert("Nome: " + data.d.[0]);
 				}
 				, error: function (xmlHttpRequest, status, err) 
 				{

@@ -347,6 +347,11 @@ function ChangeEmail()
 	var NewEmail = '"' + document.getElementById("new_email").value  + '"';
 	var Password = '"' + document.getElementById("password").value  + '"';
 	
+	var OldEmailSemAspas = sessionStorage.getItem('sessionEmail');
+	var NewEmailSemAspas = document.getElementById("new_email").value;
+	alert(OldEmailSemAspas);
+	alert(NewEmailSemAspas);
+	
 	$.support.cors = true;
 	$.mobile.allowCrossDomainPages = true;
 	
@@ -361,7 +366,9 @@ function ChangeEmail()
 					//alert(data.d);
 					if (data.d) 
 					{
-						alert("Email changed!");					
+						alert("Email changed!");
+						sessionStorage.setItem('sessionEmail', NewEmailSemAspas);
+						AlterarEmailLog(OldEmailSemAspas, NewEmailSemAspas);
 					} else 
 					{
 						alert("Invalid email or password!");
@@ -376,9 +383,11 @@ function ChangeEmail()
 
 function GetNames()
 {
-	alert("Entrou GET NAMES");
+	//alert("Entrou GET NAMES");
+	var Email = '"' + sessionStorage.getItem('sessionEmail') + '"';
 	var Data = '"' + getDate() + '"';
 	alert("Data: " + Data);
+	alert("Email: " + Email);
 	
 	$.support.cors = true;
 	$.mobile.allowCrossDomainPages = true;
@@ -388,18 +397,154 @@ function GetNames()
 			, url: "http://m2m.planetavirtual.pt/WebService/MobileM2M.asmx/GetNames"
 			, contentType: 'application/json; charset=utf-8'
 			, dataType: 'json'
-			, data: '{ "Data":' + Data + ' }'
+			, data: '{ "Data":' + Data + ',"Email":' + Email + ' }'
 			, crossDomain: true
 			, success: function (data, status) {
 					alert("SUCESSO!");
-					//var result = new Array();
-					alert(JSON.stringify(data.d));
-					//result = data.d;
-					//alert("Nome: " + data.d.[0]);
+					// Buscar string com os dados
+					var str = JSON.stringify(data.d);
+					
+					// Retirar as aspas da string
+					str = replaceAll(str, '"', "");
+					
+					// Retirar os []
+					str = replaceAll(str, '[', "");
+					str = replaceAll(str, ']', "");
+					
+					// Retirar espaços
+					str = replaceAll(str, " ", "");
+					
+					// Colocar Array em Session
+					sessionStorage.setItem('sessionUsers', str);
+					
+					// Obter string colocada em sessão ****** NOTA: FAZER ISTO E PASSOS IMEDIATAMENTE A SEGUIR QUANDO FOR PARA OBTER VAR SESSÃO
+					var dados = (sessionStorage.getItem('sessionUsers'));
+					
+					// Split e colocar em array
+					var arrayFinal = new Array();
+					arrayFinal = dados.split(",");
+					
+					window.location = "locate.html";
+					
+					//alert(arrayFinal);
+					//alert(arrayFinal[0]);
+					//alert(arrayFinal[5]);
 				}
 				, error: function (xmlHttpRequest, status, err) 
 				{
 					alert(err.d);
+				}
+	});	
+}
+
+function replaceAll(string, token, newtoken) 
+{
+	while (string.indexOf(token) != -1) {
+ 		string = string.replace(token, newtoken);
+	}
+	return string;
+}
+
+function CarregarLocate() 
+{
+	// Obter string colocada em sessão *
+	var dadosSessao = (sessionStorage.getItem('sessionUsers'));
+					
+	// Split e colocar em array
+	var arrayDados = new Array();
+	arrayDados = dadosSessao.split(",");
+	
+	var count = 0;
+	for(var i = 0; i < arrayDados.length; (i+=5))
+	{
+		count++;
+	}
+
+	for(var j = 0; count > 0; j+=5)
+	{
+		$('#MatesBar').after('<input type="button" value="' + arrayDados[j] + '" onclick="SetLocationUserID(' + j + ')"/>');
+		count--;
+	}
+
+	//alert("Carregar Locate");
+	//$('<li data-theme=""><a onclick="" data-transition="none">Carlos Rocha</a></li>').appendTo('#MatesBar');
+	//$('<li data-theme=""><a onclick="" data-transition="none">Filipe Carvas</a></li>').appendTo('#MatesBar');
+	//$('#location').after('<div id="map"></div>');
+	//$('#MatesBar').after('<input type="button" value="aa" onclick="Oi()"/>');
+	//$('#MatesBar').after('<input type="button" value="bb" onclick="Oi()"/>');
+	//$('#MatesBar').after('<li data-theme=""><a onclick="" data-transition="none">Filipe Carvas</a></li>');	
+}
+
+function SetLocationUserID(UserID)
+{
+	sessionStorage.setItem('sessionID', UserID);
+	window.location = "infoUser.html";
+}
+
+function GetUserLocation()
+{
+	var ID = (sessionStorage.getItem('sessionID'));
+	
+	var dadosSessao = (sessionStorage.getItem('sessionUsers'));
+					
+	// Split e colocar em array
+	var arrayDados = new Array();
+	arrayDados = dadosSessao.split(",");
+	
+	for(var i = ID; i < arrayDados.length; (i+=1))
+	{
+		var _Estado = arrayDados[parseInt(ID) + 1]
+		var _Hora = arrayDados[parseInt(ID) + 2];
+		var _Latitude = arrayDados[parseInt(ID) + 3]
+		var _Longitude = arrayDados[parseInt(ID) + 4]
+		alert(_Estado);
+		alert(_Hora);
+		alert(_Latitude);
+		alert(_Longitude);
+		break;
+	}
+
+	var pos = new google.maps.LatLng(_Latitude, _Longitude);
+	var options = {
+			zoom: 17,
+			center: pos,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+		
+		var map = new google.maps.Map(document.getElementById("mapUser"), options);
+		var marker = new google.maps.Marker({
+			position: pos,
+			map: map,
+			title: "User location"
+		});
+}
+
+function AlterarEmailLog(OldEmail, NewEmail)
+{
+	Old = '"' + OldEmail + '"';
+	New = '"' + NewEmail + '"';
+	alert("OLD: " + Old);
+	alert("NEW: " + New);
+	
+	$.support.cors = true;
+	$.mobile.allowCrossDomainPages = true;
+	
+	$.ajax({
+			type: 'POST'	
+			, url: "http://m2m.planetavirtual.pt/WebService/MobileM2M.asmx/AlterarEmailLog"
+			, contentType: 'application/json; charset=utf-8'
+			, dataType: 'json'
+			, data: '{ "EmailAntigo":' + Old + ',"NovoEmail":' + New + ' }'
+			, crossDomain: true
+			, success: function (data, status) {
+					if (data.d) 
+					{
+						alert("SUCESSO!");
+					}
+				}
+				, error: function (xmlHttpRequest, status, err) 
+				{
+					alert("Erro: " + err.d);
 				}
 	});	
 }

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript" charset="utf-8" src="cordova-2.7.0.js"></script>
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbg6QOrKUayB6mHdQQOW8BMmU358ZJ9wc&sensor=true"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery.ui.map.js"></script>
+		<script type="text/javascript" src="js/jquery.ui.map.extensions.js"></script>
+		
+		<style type="text/css">
+			html, body, #map-canvas {
+				margin: 0;
+				padding: 0;
+				height: 100%;
+			}
+		</style>
+		
+		<script type="text/javascript" charset="utf-8">
+		
+
+			// Wait for Cordova to load
+			function onLoad() 
+			{
+				document.addEventListener("deviceready", onDeviceReady, false);
+			}
+			
+			// Cordova is ready
+			function onDeviceReady() 
+			{
+				alert("Pronto!");
+				GPS();
+			}
+			
+			function GPS() 
+			{
+				var mapOptions = {
+					zoom: 18,
+					mapTypeId: google.maps.MapTypeId.ROADMAP
+				};
+				
+				map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);						
+
+				var pos = new google.maps.LatLng(41.1560582125, -8.626602637500001);
+
+				var marker = new google.maps.Marker({
+					map: map,
+					position: pos,
+					title: 'User Location.'
+				});
+
+				map.setCenter(pos);
+				var infowindow = new google.maps.InfoWindow(options);
+				map.setCenter(options.position);
+			
+				google.maps.event.addDomListener(window, 'load', gps);
+			}
+			
+		
+
+			
+
+			  
+			
+		</script>
+	</head>
+	
+	<body onload="GPS()">
+		<div id="map-canvas"></div>
+	</body>
+</html>

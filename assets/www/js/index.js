@@ -509,7 +509,7 @@ function GetUserLocation()
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	};
 				
-	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);						
+	map = new google.maps.Map(document.getElementById('mapUser'), mapOptions);						
 
 	var pos = new google.maps.LatLng(_Latitude, _Longitude);
 

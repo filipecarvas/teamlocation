@@ -512,6 +512,7 @@ function GetUserLocation()
 	map = new google.maps.Map(document.getElementById('mapUser'), mapOptions);						
 
 	var pos = new google.maps.LatLng(_Latitude, _Longitude);
+	//var pos = new google.maps.LatLng(41.1560582125, -8.626602637500001);
 
 	var marker = new google.maps.Marker({
 		map: map,

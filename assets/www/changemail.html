@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html>
 	<head>
+	  <script type="text/javascript">
+			if (sessionStorage.getItem('sessionEmail') == null || undefined)
+			{
+				window.location = "index.html";
+			}
+	  </script>
 	  <meta charset="utf-8">
 	  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 	  <meta name="apple-mobile-web-app-capable" content="yes">
@@ -15,7 +21,6 @@
 
 	  <!-- Extra Codiqa features -->
 	  <script src="js/codiqa.ext.js"></script>
-	   
 	</head>
 	<body onload="LoadUserFooter()">
 		<!-- Home -->

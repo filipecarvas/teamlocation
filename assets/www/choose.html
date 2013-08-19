@@ -1,37 +1,42 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<script type="text/javascript">
+			if (sessionStorage.getItem('sessionEmail') == null || undefined)
+			{
+				window.location = "index.html";
+			}
+		</script>
 		<script type="text/javascript" charset="utf-8" src="cordova-2.7.0.js"></script>
-	  <meta charset="utf-8">
-	  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-	  <meta name="apple-mobile-web-app-capable" content="yes">
-	  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-	  <title></title>
-	  
-	  <link rel="stylesheet" href="https://d10ajoocuyu32n.cloudfront.net/mobile/1.3.1/jquery.mobile-1.3.1.min.css">
-	  <link rel="stylesheet" href="css/styleoptinial.css">
-	  
-	  <!-- jQuery and jQuery Mobile -->
-	  <script src="js/jquery-1.9.1.min.js"></script>
-	  <script src="js/jquery.mobile-1.3.1.min.js"></script>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title></title>
+		  
+		<link rel="stylesheet" href="https://d10ajoocuyu32n.cloudfront.net/mobile/1.3.1/jquery.mobile-1.3.1.min.css">
+		<link rel="stylesheet" href="css/styleoptinial.css">
+		  
+		<!-- jQuery and jQuery Mobile -->
+		<script src="js/jquery-1.9.1.min.js"></script>
+		<script src="js/jquery.mobile-1.3.1.min.js"></script>
 
-	  <!-- Extra Codiqa features -->
-	  <script src="js/codiqa.ext.js"></script>
-	  
-	  <script type="text/javascript" charset="utf-8">
-			
-
-				// Wait for Cordova to load
-				function onLoad() 
-				{
-					document.addEventListener("deviceready", onDeviceReady, false);
-				}
-				
-				// Cordova is ready
-				function onDeviceReady() 
-				{
-					alert("Pronto!");
-				}
+		<!-- Extra Codiqa features -->
+		<script src="js/codiqa.ext.js"></script>
+		  
+		<script type="text/javascript" charset="utf-8">		
+		
+			// Wait for Cordova to load
+			function onLoad() 
+			{
+				document.addEventListener("deviceready", onDeviceReady, false);
+			}
+						
+			// Cordova is ready
+			function onDeviceReady() 
+			{
+				alert("Pronto!");
+			}
 		</script>
 	</head>
 

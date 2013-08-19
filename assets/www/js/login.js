@@ -11,6 +11,8 @@ function Login()
 	//var jsonText = JSON.stringify(login);
 	//alert(jsonText);
 	
+	sessionStorage.setItem('sessionEmail', null); 
+	
 	email = '"' + document.getElementById("email").value + '"';
 	var password = '"' + document.getElementById("password").value + '"';
 	//alert(email);
@@ -49,8 +51,9 @@ function Login()
 function LogOut() 
 {
 	var user = sessionStorage.getItem('sessionEmail');
-	sessionStorage.removeItem('sessionEmail');
-	alert("Logging out " + user);
+	sessionStorage.clear();
+	var name = GetUsernameByEmail(user);
+	alert("Logging out " + name);
 	window.location = "index.html";
 }
 

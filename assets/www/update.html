@@ -2,6 +2,13 @@
 <html>
 	<head>
 		<script type="text/javascript">
+			if (sessionStorage.getItem('sessionEmail') == null || undefined)
+			{
+				window.location = "index.html";
+			}
+		</script>
+	
+		<script type="text/javascript">
 			var address, watchID = null;
 		</script>
 		<meta charset="utf-8">
@@ -66,11 +73,10 @@
 					Home
 				</a>
 			</div>
-			
-			<br />
-			<br />
-			
 			<div data-role="content">
+				<h3>
+					Update your status
+				</h3>
 				<a data-role="button" onclick="bt_AvailableClick()">
 					<span id="span-available"></span>
 					&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
@@ -93,13 +99,6 @@
 			
 			<div id="location">
 				<p><b>Location: </b>unavailable</p>
-			</div>
-			
-			<div id="message">
-				<p>
-					<label for="label-message"><b>Message: </b></label>
-					<label for="label-message-type">Message Type</label>
-				</p>
 			</div>
 			
 			<div id="canvasloader-container"></div>

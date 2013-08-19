@@ -1,5 +1,11 @@
 <html>
 	<head>
+		<script type="text/javascript">
+			if (sessionStorage.getItem('sessionEmail') == null || undefined)
+			{
+				window.location = "index.html";
+			}
+		</script>
 		<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
 		<script type="text/javascript" charset="utf-8" src="cordova-2.7.0.js"></script>
 		
@@ -33,6 +39,9 @@
 			</a>
 			<div id="locationUser">
 				<p><b>Location: </b>unavailable</p>
+			</div>
+			<div id="infoUser">
+				<p><b>Info: </b>none</p>
 			</div>
 			<div id="mapUser"></div>
 			

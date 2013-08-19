@@ -1,0 +1,56 @@
+<html>
+	<head>
+		<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+		<script>
+			function Parse()
+			{
+				alert("AA");
+				var lat = 41.1560582125;
+				var lng = -8.626602637500001;
+				
+				var pos = new google.maps.LatLng(lat, lng);
+				alert("POS: " + pos);
+				var options = {
+					zoom: 17,
+					center: pos,
+					mapTypeId: google.maps.MapTypeId.ROADMAP
+				};
+				
+				var map = new google.maps.Map(document.getElementById("map"), options);
+				
+				var marker = new google.maps.Marker({
+					position: pos,
+					map: map,
+					title: "User location"
+				});
+				
+				google.maps.event.addListener(marker, 'click', function() {
+					infowindow.open(map,marker);
+				});
+				alert("ANTES");
+				geoCode(lat, lng);
+			}
+			
+			function geoCode(lat, lng)
+			{
+				alert("DENTRO");
+				var address;
+				var geocoder = new google.maps.Geocoder();
+				var latlng = new google.maps.LatLng(lat, lng);
+				geocoder.geocode({'latLng': latlng}, function(results, status) {
+					if (status == google.maps.GeocoderStatus.OK) {
+					address = results[0].formatted_address;
+					alert("ADD: " + address);				
+					} else {
+						alert("Geocoder failed due to: " + status);
+					}
+				});
+			}
+		</script>
+	</head>
+	
+	<body>
+		<button type="button" onclick="Parse()">Click</button> 
+		<div id="map" ></div>
+	</body>
+</html>

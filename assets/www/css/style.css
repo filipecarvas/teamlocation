@@ -153,6 +153,10 @@ background:-webkit-linear-gradient(top, #d1d1d1 0%,#ECECEC 100%);
 	text-align: center;
 }
 
+#infoUser {
+	text-align: center;
+}
+
 #map {
 	width:279px; 
 	height:200px; 

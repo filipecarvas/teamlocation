@@ -50,16 +50,9 @@ function bt_AvailableClick()
 	document.getElementById("span-available").style.backgroundColor = "rgb(135,187,83)";
 	status = "Disponivel";
 	// Verificar se div do mapa existe
-	if (!document.getElementById("map"))
-	{
-		getLocation();
-	} else 
-	{
-		// Remover div mapa
-		var div = document.getElementById("map");
-		div.parentNode.removeChild(div);
-		getLocation();
-	}
+	
+		getLocation(41.18988382,-8.59584504);
+	
 }
 
 function bt_BusyClick() 
@@ -143,33 +136,22 @@ function Log(str)
             });
 }
 
-function getLocation() 
+function getLocation(a,b) 
 {
 	alert("ENTROU LOCATION");
 	// Mostrar mapa
 	var Latit;
 	var Longit;
 		
-	if (navigator.geolocation) {
-		alert("ENTROU NAVIGATOR");
-		var timeoutVal = 10 * 1000 * 1000;
-		navigator.geolocation.getCurrentPosition(
-			displayPosition, 
-			displayError,
-			{ enableHighAccuracy: true, timeout: timeoutVal, maximumAge: 0 }
-		);
-	}
-	else {
-		alert("Geolocation is not supported by this browser");
-	}
+	displayPosition(a,b);
 		
-	function displayPosition(position) {
+	function displayPosition(a,b) {
 		alert("ENTROU DISPLAYPOSITION");
-		var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-		Latit = position.coords.latitude;
-		Longit = position.coords.longitude;
-		alert(Latit);
-		alert(Longit);
+		var pos = new google.maps.LatLng(a, b);
+		Latit = a;
+		Longit = b;
+		//alert(Latit);
+		//alert(Longit);
 		// Colocar Coordenadas em var global
 		setCoord(Latit,Longit);
 		// Inserir BD
@@ -188,10 +170,10 @@ function getLocation()
 			map: map,
 			title: "User location"
 		});
-		var contentString = "<b>Timestamp:</b> " + parseTimestamp(position.timestamp) + "<br/><b>User location:</b> lat " + position.coords.latitude + ", long " + position.coords.longitude + ", accuracy " + position.coords.accuracy;
-		var infowindow = new google.maps.InfoWindow({
-			content: contentString
-		});
+		//var contentString = "<b>Timestamp:</b> " + parseTimestamp(position.timestamp) + "<br/><b>User location:</b> lat " + position.coords.latitude + ", long " + position.coords.longitude + ", accuracy " + position.coords.accuracy;
+		//var infowindow = new google.maps.InfoWindow({
+		//	content: contentString
+		//});
 		google.maps.event.addListener(marker, 'click', function() {
 			infowindow.open(map,marker);
 		});

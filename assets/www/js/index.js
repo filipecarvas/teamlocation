@@ -30,7 +30,7 @@
     }
 };
 */
-
+var UserAddress;
 var address;
 var status;
 var Latitude;
@@ -195,16 +195,18 @@ function getLocation()
 			infowindow.open(map,marker);
 		});
 		geoCode();
-		}
-		function displayError(error) {
+	}
+	
+	function displayError(error) {
 			var errors = { 
 				1: 'Permission denied',
 				2: 'Position unavailable',
 				3: 'Request timeout'
 			};
 			alert("Error: " + errors[error.code]);
-		}
-		function parseTimestamp(timestamp) {
+	}
+	
+	function parseTimestamp(timestamp) {
 			var d = new Date(timestamp);
 			var day = d.getDate();
 			var month = d.getMonth() + 1;
@@ -214,9 +216,9 @@ function getLocation()
 			var secs = d.getSeconds();
 			var msec = d.getMilliseconds();
 			return day + "." + month + "." + year + " " + hour + ":" + mins + ":" + secs + "," + msec;
-		}
+	}
 		
-		function geoCode() {
+	function geoCode() {
 			var geocoder = new google.maps.Geocoder();
 			var latlng = new google.maps.LatLng(Latitude, Longitude);
 			geocoder.geocode({'latLng': latlng}, function(results, status) {
@@ -224,13 +226,31 @@ function getLocation()
 				address = results[0].formatted_address;
 				var div = document.getElementById('location');
 				div.innerHTML = '<p><b>Location: </b>' + address + '</p>';
-				infowindow.setContent(results[1].formatted_address);
+				infowindow.setContent(results[0].formatted_address);
 				infowindow.open(map, marker);				
 			  } else {
 				alert("Geocoder failed due to: " + status);
 			  }
-			});	
+			});
+	}
+}
+
+function geoCode2(Lat, Long)
+{	
+	var geocoder = new google.maps.Geocoder();
+	var latlngt = new google.maps.LatLng(Lat, Long);
+	geocoder.geocode({'latLng': latlngt}, function(results, status)
+	{
+		if (status == google.maps.GeocoderStatus.OK) {
+			UserAddress = results[0].formatted_address;
+			//alert("ADSBAJD: " + UserAddress);
+			var div = document.getElementById('locationUser');
+			div.innerHTML = '<p><b>Location: </b>' + UserAddress + '</p>';
+		} else 
+		{
+			alert("Geocoder failed due to: " + status);
 		}
+	});
 }
 
 // Obter Data e Horas
@@ -386,8 +406,8 @@ function GetNames()
 	//alert("Entrou GET NAMES");
 	var Email = '"' + sessionStorage.getItem('sessionEmail') + '"';
 	var Data = '"' + getDate() + '"';
-	alert("Data: " + Data);
-	alert("Email: " + Email);
+	//alert("Data: " + Data);
+	//alert("Email: " + Email);
 	
 	$.support.cors = true;
 	$.mobile.allowCrossDomainPages = true;
@@ -400,7 +420,7 @@ function GetNames()
 			, data: '{ "Data":' + Data + ',"Email":' + Email + ' }'
 			, crossDomain: true
 			, success: function (data, status) {
-					alert("SUCESSO!");
+					//alert("SUCESSO!");
 					// Buscar string com os dados
 					var str = JSON.stringify(data.d);
 					
@@ -459,20 +479,14 @@ function CarregarLocate()
 	{
 		count++;
 	}
-
+	
 	for(var j = 0; count > 0; j+=5)
 	{
-		$('#MatesBar').after('<input type="button" value="' + arrayDados[j] + '" onclick="SetLocationUserID(' + j + ')"/>');
+		//$('#MatesBar').after('<input type="button" value="' + arrayDados[j] + '" onclick="SetLocationUserID(' + j + ')"/>');
+		$('#MatesBar').after('<li><a onclick="SetLocationUserID(' + j + ')">' + arrayDados[j] + '</a></li>');
+		$('ul').listview('refresh');
 		count--;
 	}
-
-	//alert("Carregar Locate");
-	//$('<li data-theme=""><a onclick="" data-transition="none">Carlos Rocha</a></li>').appendTo('#MatesBar');
-	//$('<li data-theme=""><a onclick="" data-transition="none">Filipe Carvas</a></li>').appendTo('#MatesBar');
-	//$('#location').after('<div id="map"></div>');
-	//$('#MatesBar').after('<input type="button" value="aa" onclick="Oi()"/>');
-	//$('#MatesBar').after('<input type="button" value="bb" onclick="Oi()"/>');
-	//$('#MatesBar').after('<li data-theme=""><a onclick="" data-transition="none">Filipe Carvas</a></li>');	
 }
 
 function SetLocationUserID(UserID)
@@ -495,24 +509,24 @@ function GetUserLocation()
 	{
 		var _Estado = arrayDados[parseInt(ID) + 1]
 		var _Hora = arrayDados[parseInt(ID) + 2];
-		var _Latitude = arrayDados[parseInt(ID) + 3]
-		var _Longitude = arrayDados[parseInt(ID) + 4]
-		alert(_Estado);
-		alert(_Hora);
-		alert(_Latitude);
-		alert(_Longitude);
+		var _Latitude = arrayDados[parseInt(ID) + 3];
+		var _Longitude = "-" + arrayDados[parseInt(ID) + 4];
+		//alert(_Estado);
+		//alert(_Hora);
+		//alert(_Latitude);
+		//alert(_Longitude);
 		break;
 	}
+	
+	var pos = new google.maps.LatLng(Number(_Latitude), Number(_Longitude));
 
 	var mapOptions = {
-		zoom: 18,
+		zoom: 17,
+		center: pos,
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	};
 				
 	map = new google.maps.Map(document.getElementById('mapUser'), mapOptions);						
-
-	var pos = new google.maps.LatLng(_Latitude, _Longitude);
-	//var pos = new google.maps.LatLng(41.1560582125, -8.626602637500001);
 
 	var marker = new google.maps.Marker({
 		map: map,
@@ -521,9 +535,16 @@ function GetUserLocation()
 	});
 
 	map.setCenter(pos);
-	var infowindow = new google.maps.InfoWindow(options);
-	map.setCenter(options.position);
+	
+	//var infowindow = new google.maps.InfoWindow(options);
+	//map.setCenter(options.position);
 			
+	//google.maps.event.addDomListener(window, 'load', GetUserLocation);
+	
+	//alert("AQUIIII");
+	// Colocar address
+	UserAddress = geoCode2(_Latitude, _Longitude);
+	
 	google.maps.event.addDomListener(window, 'load', GetUserLocation);
 }
 
@@ -555,4 +576,11 @@ function AlterarEmailLog(OldEmail, NewEmail)
 					alert("Erro: " + err.d);
 				}
 	});	
+}
+
+function LoadUserFooter()
+{
+	var Email = sessionStorage.getItem('sessionEmail');
+	var div = document.getElementById('UserFooter');
+	div.innerHTML = Email;
 }

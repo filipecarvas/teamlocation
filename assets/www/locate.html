@@ -7,7 +7,7 @@
 	  <meta name="apple-mobile-web-app-status-bar-style" content="black">
 	  <title></title>
 	  
-	  <link id="CssJQ" rel="stylesheet" href="https://d10ajoocuyu32n.cloudfront.net/mobile/1.3.1/jquery.mobile-1.3.1.min.css">
+	  <link rel="stylesheet" href="https://d10ajoocuyu32n.cloudfront.net/mobile/1.3.1/jquery.mobile-1.3.1.min.css">
 	  <link rel="stylesheet" href="css/styleoptinial.css">
 	  
 	  <!-- Extra Codiqa features -->
@@ -19,9 +19,12 @@
 
 	  <!-- Extra Codiqa features -->
 	  <script src="js/codiqa.ext.js"></script>
+	  
+	  <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+	  <script type="text/javascript" charset="utf-8" src="cordova-2.7.0.js"></script>
 	   
 	</head>
-	<body onload="CarregarLocate()">
+	<body onload="CarregarLocate();LoadUserFooter()">
 	<!-- Home -->
 	<div data-role="page" id="page1">
 		<div data-theme="a" data-role="header">
@@ -47,25 +50,15 @@
 			<h3>
 				Check their locations
 			</h3>
-			<ul data-role="listview" data-divider-theme="b" data-inset="true">
+			<ul id="ulMates" data-role="listview" data-divider-theme="b" data-inset="true">
 				<li id="MatesBar"data-role="list-divider" role="heading">
 					Mates
-				</li>
-				<li data-theme="">
-					<a onclick="location.href='seeCarlos.html'" data-transition="none">
-						Carlos Rocha
-					</a>
-				</li>
-				<li data-theme="">
-					<a onclick="location.href='seeFilipe.html'" data-transition="slide">
-						Filipe Carvas
-					</a>
 				</li>
 			</ul>
 		</div>
 		<div data-theme="a" data-role="footer" data-position="fixed">
-			<h3>
-				team.location 2013
+			<h3 id="UserFooter">
+				
 			</h3>
 		</div>
 	</div>

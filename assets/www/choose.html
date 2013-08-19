@@ -33,14 +33,9 @@
 					alert("Pronto!");
 				}
 		</script>
-		
-		<style>
-			.ui-page { background: Azure;}
-		</style>
-	   
 	</head>
 
-	<body>
+	<body onload="LoadUserFooter()">
 	<!-- Home -->
 	<div data-role="page" id="page1">
 		<div data-theme="a" data-role="header" data-position="fixed">
@@ -77,8 +72,8 @@
 			</ul>
 		</div>
 		<div data-theme="a" data-role="footer" data-position="fixed">
-			<h3>
-				team.location 2013
+			<h3 id="UserFooter">
+				
 			</h3>
 		</div>
 	</div>

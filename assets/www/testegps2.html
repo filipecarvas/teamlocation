@@ -35,6 +35,7 @@
 			{
 				var _Latitude = 41.1560582125;
 				var _Longitude = -8.626602637500001;
+				//alert(Number(_Latitude));
 			
 				var mapOptions = {
 					zoom: 18,
@@ -43,7 +44,11 @@
 				
 				map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);						
 
-				var pos = new google.maps.LatLng(41.1560582125, -8.626602637500001);
+				//var pos = new google.maps.LatLng(41.1560582125, -8.626602637500001);
+				var pos = new google.maps.LatLng(_Latitude, _Longitude);
+				alert("POS1: " + pos);
+				var pos2 = new google.maps.LatLng(41.1560582125, -8.626602637500001);
+				alert("POS2: " + pos2);
 
 				var marker = new google.maps.Marker({
 					map: map,

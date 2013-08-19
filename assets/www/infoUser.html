@@ -2,15 +2,47 @@
 	<head>
 		<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
 		<script type="text/javascript" charset="utf-8" src="cordova-2.7.0.js"></script>
-	
-		<style>
-			#mapUser { width:300px; height:200px; }
-		</style>
+		
+		<!-- jQuery and jQuery Mobile -->
+		<script src="js/jquery-1.9.1.min.js"></script>
+		<script src="js/jquery.mobile-1.3.1.min.js"></script>
+		
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link rel="stylesheet" href="https://d10ajoocuyu32n.cloudfront.net/mobile/1.3.1/jquery.mobile-1.3.1.min.css">
+		<link rel="stylesheet" href="css/styleoptinial.css">
 	</head>
 	
-	<body>
-		<input type="button" value="See location" onclick="GetUserLocation()" />
-		<div id="mapUser"></div>
+	<body onload="LoadUserFooter()">
+	
+		<div data-role="page" id="page1">
+		
+			<div id="header" data-theme="a" data-role="header" data-position="fixed">
+				<h3>
+					
+				</h3>
+				<a data-role="button" data-theme="b" data-inline="true" data-rel="back" data-icon="back" data-iconpos="left" >
+					Back
+				</a>
+				<a data-theme="g" data-role="button" data-inline="true" class="ui-btn-right" data-icon="home" href="choose.html">
+					Home
+				</a>
+			</div>
+		
+			<a data-role="button" onclick="GetUserLocation()" >
+				See location
+			</a>
+			<div id="locationUser">
+				<p><b>Location: </b>unavailable</p>
+			</div>
+			<div id="mapUser"></div>
+			
+			<div data-theme="a" data-role="footer" data-position="fixed">
+				<h3 id="UserFooter">
+					
+				</h3>
+			</div>
+		
+		</div>
 		<script type="text/javascript" src="js/index.js"></script>
 	</body>
 </html>

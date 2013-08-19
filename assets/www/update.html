@@ -44,14 +44,14 @@
 			// Cordova is ready
 			function onDeviceReady() 
 			{
-				alert("Pronto!");
+				//alert("Pronto!");
 				
 			}
 		
 		</script>
 	</head>
   
-	<body onload="onLoad()">
+	<body onload="onLoad();LoadUserFooter()">
 	
 		<!-- Home -->
 		<div data-role="page" id="page1">
@@ -104,8 +104,8 @@
 			
 			<div id="canvasloader-container"></div>
 			<div data-theme="a" data-role="footer" data-position="fixed">
-				<h3>
-					team.location 2013
+				<h3 id="UserFooter">
+					
 				</h3>
 			</div>
 		</div>

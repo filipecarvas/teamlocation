@@ -92,6 +92,24 @@ body {
 	-webkit-transition:box-shadow 0.5s;
 }
 
+.button-status{
+	background: #ECECEC;
+	border-radius: 15px;
+	padding: 10px 20px;
+	display: block;
+	font-family: arial;
+	font-weight: bold;
+	color:#7f7f7f;
+	text-decoration: none;
+	text-shadow:0px 1px 0px #fff;
+	border:1px solid #a7a7a7;
+	width: 400px;
+	margin:0px auto;
+	margin-top:25px;
+	box-shadow: 0px 2px 1px white inset, 0px -2px 8px white, 0px 2px 5px rgba(0, 0, 0, 0.1), 0px 8px 10px rgba(0, 0, 0, 0.1);
+	-webkit-transition:box-shadow 0.5s;
+}
+
 
 .button:hover{
 	box-shadow: 0px 2px 1px white inset, 0px -2px 20px white, 0px 2px 5px rgba(0, 0, 0, 0.1), 0px 8px 10px rgba(0, 0, 0, 0.1);
@@ -104,7 +122,7 @@ background:-webkit-linear-gradient(top, #d1d1d1 0%,#ECECEC 100%);
 
 /* Span Status */
 
-#span-available {
+#span-Available {
 	display: inline-block;
     width: 9px;  
     height: 9px;  
@@ -115,7 +133,7 @@ background:-webkit-linear-gradient(top, #d1d1d1 0%,#ECECEC 100%);
     clear: left;
 }
 
-#span-busy {
+#span-Busy {
 	display: inline-block;  
     width: 9px;  
     height: 9px;  
@@ -125,10 +143,10 @@ background:-webkit-linear-gradient(top, #d1d1d1 0%,#ECECEC 100%);
     border-radius: 4px;  
     clear: both;  
     position: center-left;  
-    bottombottom: 0; 
+    bottom: 0; 
 }
 
-#span-offline {
+#span-Offline {
 	display: inline-block;  
     width: 9px;  
     height: 9px;  
@@ -172,6 +190,14 @@ background:-webkit-linear-gradient(top, #d1d1d1 0%,#ECECEC 100%);
 }
 
 #message {
+	text-align: center;
+}
+
+#timeinfo {
+	text-align: center;
+}
+
+#locationAddress {
 	text-align: center;
 }
 

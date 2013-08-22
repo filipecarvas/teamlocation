@@ -39,16 +39,19 @@ var Username;
 
 function bt_AvailableClick() 
 {
+	//alert("1");
 	// Mudar busy para inactivo
-	document.getElementById("span-busy").style.boxShadow = "";
-	document.getElementById("span-busy").style.backgroundColor = "rgb(0,0,0)";
+	document.getElementById("span-Busy").style.boxShadow = "";
+	document.getElementById("span-Busy").style.backgroundColor = "rgb(0,0,0)";
 	// Mudar offline para inactivo
-	document.getElementById("span-offline").style.boxShadow = "inset 0px 0px 0px 0px, 0px 0px 0px 0px";
-	document.getElementById("span-offline").style.backgroundColor = "rgb(0,0,0)";
+	document.getElementById("span-Offline").style.boxShadow = "inset 0px 0px 0px 0px, 0px 0px 0px 0px";
+	document.getElementById("span-Offline").style.backgroundColor = "rgb(0,0,0)";
 	// Colocar cores em available
-	document.getElementById("span-available").style.boxShadow = "inset 0px 1px 0px 0px rgba(250,250,250,0.5), 0px 0px 3px 2px rgba(135,187,83,0.5)";
-	document.getElementById("span-available").style.backgroundColor = "rgb(135,187,83)";
-	status = "Disponivel";
+	document.getElementById("span-Available").style.boxShadow = "inset 0px 1px 0px 0px rgba(250,250,250,0.5), 0px 0px 3px 2px rgba(135,187,83,0.5)";
+	document.getElementById("span-Available").style.backgroundColor = "rgb(135,187,83)";
+	status = "Online";
+	sessionStorage.setItem('sessionEstado', status);
+	
 	// Verificar se div do mapa existe
 	if (!document.getElementById("map"))
 	{
@@ -58,22 +61,28 @@ function bt_AvailableClick()
 		// Remover div mapa
 		var div = document.getElementById("map");
 		div.parentNode.removeChild(div);
+		div = document.getElementById("locationAddress");
+		div.parentNode.removeChild(div);
 		getLocation();
 	}
 }
 
 function bt_BusyClick() 
 {
+	//alert("2");
 	// Mudar available para inactivo
-	document.getElementById("span-available").style.boxShadow = "";
-	document.getElementById("span-available").style.backgroundColor = "rgb(0,0,0)";
+	document.getElementById("span-Available").style.boxShadow = "";
+	document.getElementById("span-Available").style.backgroundColor = "rgb(0,0,0)";
 	// Mudar offline para inactivo
-	document.getElementById("span-offline").style.boxShadow = "inset 0px 0px 0px 0px, 0px 0px 0px 0px";
-	document.getElementById("span-offline").style.backgroundColor = "rgb(0,0,0)";
+	document.getElementById("span-Offline").style.boxShadow = "inset 0px 0px 0px 0px, 0px 0px 0px 0px";
+	document.getElementById("span-Offline").style.backgroundColor = "rgb(0,0,0)";
 	// Colocar cores em busy
-	document.getElementById("span-busy").style.boxShadow = "inset 0px 1px 0px 0px rgba(250,250,250,0.5), 0px 0px 3px 2px rgba(226,0,0,0.5)";
-	document.getElementById("span-busy").style.backgroundColor = "rgb(226,0,0)";
+	document.getElementById("span-Busy").style.boxShadow = "inset 0px 1px 0px 0px rgba(250,250,250,0.5), 0px 0px 3px 2px rgba(226,0,0,0.5)";
+	document.getElementById("span-Busy").style.backgroundColor = "rgb(226,0,0)";
 	status = "Ocupado";
+	sessionStorage.setItem('sessionEstado', status);
+	
+	// Verificar se div do mapa existe
 	if (!document.getElementById("map"))
 	{
 		getLocation();
@@ -82,32 +91,60 @@ function bt_BusyClick()
 		// Remover div mapa
 		var div = document.getElementById("map");
 		div.parentNode.removeChild(div);
+		div = document.getElementById("locationAddress");
+		div.parentNode.removeChild(div);
 		getLocation();
 	}
 }
 
 function bt_OfflineClick() 
 {
+	//alert("3");
 	// Mudar available para inactivo
-	document.getElementById("span-available").style.boxShadow = "";
-	document.getElementById("span-available").style.backgroundColor = "rgb(0,0,0)";
+	document.getElementById("span-Available").style.boxShadow = "";
+	document.getElementById("span-Available").style.backgroundColor = "rgb(0,0,0)";
 	// Mudar busy para inactivo
-	document.getElementById("span-busy").style.boxShadow = "";
-	document.getElementById("span-busy").style.backgroundColor = "rgb(0,0,0)";
+	document.getElementById("span-Busy").style.boxShadow = "";
+	document.getElementById("span-Busy").style.backgroundColor = "rgb(0,0,0)";
 	// Colocar cores em offline
-	document.getElementById("span-offline").style.boxShadow = "inset 0px 1px 0px 0px rgba(250,250,250,0.5), 0px 0px 2px 2px rgba(104,104,104,0.5)";
-	document.getElementById("span-offline").style.backgroundColor = "rgb(104,104,104)";
+	document.getElementById("span-Offline").style.boxShadow = "inset 0px 1px 0px 0px rgba(250,250,250,0.5), 0px 0px 2px 2px rgba(104,104,104,0.5)";
+	document.getElementById("span-Offline").style.backgroundColor = "rgb(104,104,104)";
 	// Log
 	status = "Offline";
+	sessionStorage.setItem('sessionEstado', status);
 	Log(status);
 	// Remover div mapa
 	var div = document.getElementById("map");
 	div.parentNode.removeChild(div);
 	// Colocar texto
-	var div = document.getElementById('location');
-	div.innerHTML = '<p><b>Location: </b>unavailable</p>' + '<b>Last location: </b>' + address;
-	// Inserir em BD
+	div = document.getElementById("locationAddress");
+	div.parentNode.removeChild(div);
+	var div = document.getElementById('locationAddress');
+	div.innerHTML = '<p><b>Location: </b>unavailable</p>' + '<b>Last location: </b>' + sessionStorage.getItem('sessionAddress');
+}
+
+function LoadSpan(Estado)
+{
+	if (Estado == "Available")
+	{
+		// Colocar cores em available
+		document.getElementById("span-Available").style.boxShadow = "inset 0px 1px 0px 0px rgba(250,250,250,0.5), 0px 0px 3px 2px rgba(135,187,83,0.5)";
+		document.getElementById("span-Available").style.backgroundColor = "rgb(135,187,83)";
+	}
 	
+	if (Estado == "Busy")
+	{
+		// Colocar cores em busy
+		document.getElementById("span-Busy").style.boxShadow = "inset 0px 1px 0px 0px rgba(250,250,250,0.5), 0px 0px 3px 2px rgba(226,0,0,0.5)";
+		document.getElementById("span-Busy").style.backgroundColor = "rgb(226,0,0)";
+	}
+
+	if (Estado == "Offline")
+	{
+		// Colocar cores em offline
+		document.getElementById("span-Offline").style.boxShadow = "inset 0px 1px 0px 0px rgba(250,250,250,0.5), 0px 0px 2px 2px rgba(104,104,104,0.5)";
+		document.getElementById("span-Offline").style.backgroundColor = "rgb(104,104,104)";
+	}
 }
 
 function Log(str) 
@@ -145,13 +182,13 @@ function Log(str)
 
 function getLocation() 
 {
-	alert("ENTROU LOCATION");
+	//alert("ENTROU LOCATION");
 	// Mostrar mapa
 	var Latit;
 	var Longit;
 		
 	if (navigator.geolocation) {
-		alert("ENTROU NAVIGATOR");
+		//alert("ENTROU NAVIGATOR");
 		var timeoutVal = 10 * 1000 * 1000;
 		navigator.geolocation.getCurrentPosition(
 			displayPosition, 
@@ -164,18 +201,21 @@ function getLocation()
 	}
 		
 	function displayPosition(position) {
-		alert("ENTROU DISPLAYPOSITION");
+		//alert("ENTROU DISPLAYPOSITION");
 		var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 		Latit = position.coords.latitude;
 		Longit = position.coords.longitude;
-		alert(Latit);
-		alert(Longit);
+		sessionStorage.setItem('sessionLat1', Latit);
+		sessionStorage.setItem('sessionLon1', Longit);
+		//alert(Latit);
+		//alert(Longit);
 		// Colocar Coordenadas em var global
 		setCoord(Latit,Longit);
 		// Inserir BD
-		Log(status);
+		Log((sessionStorage.getItem('sessionEstado')));
 		//Criar div após saber localização
-		$('#location').after('<div id="map"></div>');
+		$('#divcontent').after('<div id="locationAddress"></div>');
+		$('#locationAddress').after('<br /><div id="map"></div>');
 		//$('#map').before('<br />');
 		var options = {
 			zoom: 17,
@@ -225,8 +265,8 @@ function getLocation()
 			geocoder.geocode({'latLng': latlng}, function(results, status) {
 			  if (status == google.maps.GeocoderStatus.OK) {
 				address = results[0].formatted_address;
-				var div = document.getElementById('location');
-				div.innerHTML = '<p><b>Location: </b>' + address + '</p>';
+				$('#locationAddress').append(address);
+				sessionStorage.setItem('sessionAddress', address);
 				infowindow.setContent(results[0].formatted_address);
 				infowindow.open(map, marker);				
 			  } else {
@@ -245,8 +285,8 @@ function geoCode2(Lat, Long)
 		if (status == google.maps.GeocoderStatus.OK) {
 			UserAddress = results[0].formatted_address;
 			//alert("ADSBAJD: " + UserAddress);
-			var div = document.getElementById('locationUser');
-			div.innerHTML = '<p><b>Location: </b>' + UserAddress + '</p>';
+			//$('#button-estado').after('<div id="location"><p>' + UserAddress + '</p></div>');
+			$('#timeinfo').before('<div id="location"><p>' + UserAddress + '</p></div>');
 		} else 
 		{
 			alert("Geocoder failed due to: " + status);
@@ -438,6 +478,8 @@ function GetNames()
 					// Colocar Array em Session
 					sessionStorage.setItem('sessionUsers', str);
 					
+					CarregarHome();
+					
 					// Obter string colocada em sessão ****** NOTA: FAZER ISTO E PASSOS IMEDIATAMENTE A SEGUIR QUANDO FOR PARA OBTER VAR SESSÃO
 					var dados = (sessionStorage.getItem('sessionUsers'));
 					
@@ -445,15 +487,15 @@ function GetNames()
 					var arrayFinal = new Array();
 					arrayFinal = dados.split(",");
 					
-					window.location = "locate.html";
-					
 					//alert(arrayFinal);
 					//alert(arrayFinal[0]);
 					//alert(arrayFinal[5]);
 				}
 				, error: function (xmlHttpRequest, status, err) 
 				{
-					alert(err.d);
+					var div = document.getElementById('dinm-buttons');
+					div.innerHTML = "No results.";	
+					//alert(err.d);
 				}
 	});	
 }
@@ -466,11 +508,12 @@ function replaceAll(string, token, newtoken)
 	return string;
 }
 
-function CarregarLocate() 
+function CarregarHome() 
 {	
+	//alert("Entrou home");
 	// Obter string colocada em sessão *
 	var dadosSessao = (sessionStorage.getItem('sessionUsers'));
-					
+	
 	// Split e colocar em array
 	var arrayDados = new Array();
 	arrayDados = dadosSessao.split(",");
@@ -485,27 +528,110 @@ function CarregarLocate()
 	{
 		for(var j = 0; count > 0; j+=5)
 		{
+			for(var i = j; i < arrayDados.length; (i+=1))
+			{
+				var _Email = arrayDados[parseInt(j)];
+				var _Hora = arrayDados[parseInt(j) + 2];
+				var _Lat = arrayDados[parseInt(j) + 3];
+				var _Long = "-" + arrayDados[parseInt(j) + 4];
+			
+				break;
+			}
+			
+			// Obter coord e calc distancia
+			var LatUser1 = sessionStorage.getItem('sessionLat1');
+			var LonUser1 = sessionStorage.getItem('sessionLon1');
+			var LatUser2 = _Lat
+			var LonUser2 = _Long;
+			
+			var dist = getDistanceFromLatLonInKm(LatUser1, LonUser1, LatUser2, LonUser2);
+			
 			//$('#MatesBar').after('<input type="button" value="' + arrayDados[j] + '" onclick="SetLocationUserID(' + j + ')"/>');
-			$('#MatesBar').after('<li><a onclick="SetLocationUserID(' + j + ')">' + GetUsernameByEmail(arrayDados[j]) + '</a></li>');
-			$('ul').listview('refresh');
-			count--;
+			$('#dinm-buttons').append('<a id="div' + j + '" data-role="button" data-icon="arrow-r" data-iconpos="right" onclick="SetLocationUserID(' + j + ')">' + GetUsernameByEmail(arrayDados[j]) + '</a>');
+			
+			// System time
+			var time = new Date();
+			var systemTime = time.getHours() + ":" + time.getMinutes();
+			
+			var userTime = parseTime(systemTime) - parseTime(_Hora);
+			
+			var Hours = Math.floor(userTime/60);
+			var Minutes = userTime%60;
+			var FinalTime = Hours + "h" + Minutes + "m";
+			
+			// Para qdo o estado é offline
+			if (sessionStorage.getItem('sessionEstado') == "Offline")
+			{
+				if (userTime < 60)
+				{
+					$('#div' + j).after('<div id="location"><p>' + userTime + 'm &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp kms unavailable</p></div>');
+					sessionStorage.setItem('Tempo' + j, userTime);
+					count--;
+				} else
+				{
+					$('#div' + j).after('<div id="location"><p>' + FinalTime + ' &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp kms unavailable</p></div>');
+					sessionStorage.setItem('Tempo' + j, FinalTime);
+					count--;
+				}
+			} else
+			{
+				if (userTime < 60)
+				{
+					if (dist < 0.05)
+					{
+						$('#div' + j).after('<div id="location"><p>' + userTime + 'm &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp ' + dist.toFixed(2) + 'km</p></div>');
+						sessionStorage.setItem('Tempo' + j, userTime);
+						count--;	
+					} else
+					{
+						$('#div' + j).after('<div id="location"><p>' + userTime + 'm &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp ' + dist.toFixed(2) + 'km</p></div>');
+						sessionStorage.setItem('Tempo' + j, userTime);
+						count--;
+					}
+				} else
+				{
+					if(dist < 0.05)
+					{
+						$('#div' + j).after('<div id="location"><p>' + FinalTime + ' &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp ' + dist.toFixed(2) + 'km</p></div>');
+						sessionStorage.setItem('Tempo' + j, FinalTime);
+						count--;	
+					} else
+					{
+						$('#div' + j).after('<div id="location"><p>' + FinalTime + ' &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp ' + dist.toFixed(2) + 'km</p></div>');
+						sessionStorage.setItem('Tempo' + j, FinalTime);
+						count--;
+					}
+				}
+			}
 		}
 	} else
 	{
-		$('#ulMates').after('<div><h4>No results.</h4></div>');
-		$('ul').listview('refresh');
+		$('#location').after('<div><h4>No mates on service.</h4></div>');
 	}
+	$('#dinm-buttons').trigger('create');
 }
 
 function SetLocationUserID(UserID)
 {
 	sessionStorage.setItem('sessionID', UserID);
-	window.location = "infoUser.html";
+	
+	// Obter string colocada em sessão *
+	var dadosSessao = (sessionStorage.getItem('sessionUsers'));
+	
+	// Split e colocar em array
+	var arrayDados = new Array();
+	arrayDados = dadosSessao.split(",");
+	
+	var EmailUserClicked = arrayDados[parseInt(UserID)];
+	
+	sessionStorage.setItem('EmailUserClickado', EmailUserClicked);
+	window.location = "userinfo.html";
 }
 
-function GetUserLocation()
+function GetUserLocation(_ID)
 {
-	var ID = (sessionStorage.getItem('sessionID'));
+	var ID = _ID;
+	//alert(ID);
 	
 	var dadosSessao = (sessionStorage.getItem('sessionUsers'));
 					
@@ -522,7 +648,7 @@ function GetUserLocation()
 		var _Longitude = "-" + arrayDados[parseInt(ID) + 4];
 		
 		// Colocar Info
-		getInfo(_Email, _Estado, _Hora);
+		//getInfo(_Email, _Estado, _Hora);
 		//alert(_Estado);
 		//alert(_Hora);
 		//alert(_Latitude);
@@ -699,4 +825,223 @@ function getInfo(_Email, _Estado, _Hora)
 function parseTime(s) {
    var c = s.split(':');
    return parseInt(c[0]) * 60 + parseInt(c[1]);
+}
+
+function LoadHome()
+{
+	// Criar div's
+	$('#button-status').after('<div id="location" class="location"></div>');
+	$('#location').before('<div id="button-status"></div>');
+	$('#location').after('<div id="dinm-buttons"></div>');
+
+	//alert("NTROU HOME");
+	// Criar botao para o estado
+	var Estado = sessionStorage.getItem('sessionEstado');
+	
+	if (Estado == "Online")
+	{
+		Estado = "Available";
+	}
+	if (Estado == "Ocupado")
+	{
+		Estado = "Busy";
+	}
+	
+	//alert(Estado);
+	$('#button-status').append('<a data-role="button" data-icon="arrow-r" data-iconpos="right" onclick="Redirect()"><span id="span-' + Estado + '"></span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp ' + Estado + '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>');
+	$('#button-status').trigger('create');
+	LoadSpan(Estado);
+	
+	// Criar div para texto de localização
+	var div = document.getElementById('location');
+	if (Estado == "Available")
+	{
+		div.innerHTML = '<p><b>Location: </b>' + sessionStorage.getItem('sessionAddress') + '</p>';
+	}
+	
+	if (Estado == "Busy")
+	{
+		div.innerHTML = '<p><b>Location: </b>' + sessionStorage.getItem('sessionAddress') + '</p>';
+	}
+	
+	if (Estado == "Offline")
+	{
+		div.innerHTML = '<p><b>Location: </b>unavailable</p>';
+	}
+	
+	// Criar botoes e respectivo texto
+	GetNames();
+}
+
+function RefreshHome()
+{
+	var div;
+	
+	div = document.getElementById("button-status");
+	div.parentNode.removeChild(div);
+	
+	div = document.getElementById("location");
+	div.parentNode.removeChild(div);
+	
+	div = document.getElementById("dinm-buttons");
+	div.parentNode.removeChild(div);
+	
+	LoadHome();
+}
+
+function Redirect()
+{
+	window.location = "updatestatus.html";
+}
+
+function RedirectHome()
+{
+	window.location = "home.html";
+}
+
+function LoadUpdate()
+{
+	var email = sessionStorage.getItem('sessionEmail')
+	var username = GetUsernameByEmail(email);
+	var div = document.getElementById('location');
+	div.innerHTML = '<p><b>' + username + '</b></p>';
+	
+	var Estado = sessionStorage.getItem('sessionEstado');
+	if (Estado == "Online")
+	{
+		// Mudar busy para inactivo
+		document.getElementById("span-Busy").style.boxShadow = "";
+		document.getElementById("span-Busy").style.backgroundColor = "rgb(0,0,0)";
+		// Mudar offline para inactivo
+		document.getElementById("span-Offline").style.boxShadow = "inset 0px 0px 0px 0px, 0px 0px 0px 0px";
+		document.getElementById("span-Offline").style.backgroundColor = "rgb(0,0,0)";
+		// Colocar cores em available
+		document.getElementById("span-Available").style.boxShadow = "inset 0px 1px 0px 0px rgba(250,250,250,0.5), 0px 0px 3px 2px rgba(135,187,83,0.5)";
+		document.getElementById("span-Available").style.backgroundColor = "rgb(135,187,83)";
+		Estado = "Available";
+		sessionStorage.setItem('sessionEstado', Estado);
+	}
+	
+	if (Estado == "Ocupado")
+	{
+		// Mudar available para inactivo
+		document.getElementById("span-Available").style.boxShadow = "";
+		document.getElementById("span-Available").style.backgroundColor = "rgb(0,0,0)";
+		// Mudar offline para inactivo
+		document.getElementById("span-Offline").style.boxShadow = "inset 0px 0px 0px 0px, 0px 0px 0px 0px";
+		document.getElementById("span-Offline").style.backgroundColor = "rgb(0,0,0)";
+		// Colocar cores em busy
+		document.getElementById("span-Busy").style.boxShadow = "inset 0px 1px 0px 0px rgba(250,250,250,0.5), 0px 0px 3px 2px rgba(226,0,0,0.5)";
+		document.getElementById("span-Busy").style.backgroundColor = "rgb(226,0,0)";
+		Estado = "Busy";
+		sessionStorage.setItem('sessionEstado', Estado);
+	}
+	
+	if (Estado == "Offline")
+	{
+		// Mudar available para inactivo
+		document.getElementById("span-Available").style.boxShadow = "";
+		document.getElementById("span-Available").style.backgroundColor = "rgb(0,0,0)";
+		// Mudar busy para inactivo
+		document.getElementById("span-Busy").style.boxShadow = "";
+		document.getElementById("span-Busy").style.backgroundColor = "rgb(0,0,0)";
+		// Colocar cores em offline
+		document.getElementById("span-Offline").style.boxShadow = "inset 0px 1px 0px 0px rgba(250,250,250,0.5), 0px 0px 2px 2px rgba(104,104,104,0.5)";
+		document.getElementById("span-Offline").style.backgroundColor = "rgb(104,104,104)";
+	}
+	
+	// Verificar se div do mapa existe
+	if (!document.getElementById("map"))
+	{
+		getLocation();
+	} else 
+	{
+		// Remover div mapa
+		var div = document.getElementById("map");
+		div.parentNode.removeChild(div);
+		getLocation();
+	}
+}
+
+function LoadUserInfo()
+{
+	var email = sessionStorage.getItem('EmailUserClickado');
+	var username = GetUsernameByEmail(email);
+	var div = document.getElementById('location');
+	div.innerHTML = '<p><b>' + username + '</b></p>';
+	
+	var dadosSessao = (sessionStorage.getItem('sessionUsers'));
+					
+	// Split e colocar em array
+	var arrayDados = new Array();
+	arrayDados = dadosSessao.split(",");
+	
+	var ID;
+	var _Estado;
+	var _Lat;
+	var _Long;
+	for(var i = 0; i < arrayDados.length; (i+=1))
+	{
+		if(arrayDados[parseInt(i)] == email)
+		{
+			ID = i;
+			_Estado = arrayDados[parseInt(i) + 1];
+			_Lat = arrayDados[parseInt(i) + 3];
+			_Long = "-" + arrayDados[parseInt(i) + 4];
+			break;
+		}
+	}
+	
+	if (_Estado == "Online")
+	{
+		_Estado = "Available";
+	}
+	
+	if (_Estado == "Ocupado")
+	{
+		_Estado = "Busy";
+	}
+	
+	// Obter coord e calc distancia
+	var LatUser1 = sessionStorage.getItem('sessionLat1');
+	var LonUser1 = sessionStorage.getItem('sessionLon1');
+	var LatUser2 = _Lat
+	var LonUser2 = _Long;
+	
+	var dist = getDistanceFromLatLonInKm(LatUser1, LonUser1, LatUser2, LonUser2);
+	
+	$('#button-estado').append('<a data-role="button" data-corners="false">' + _Estado + '</a>');
+	$('#button-estado').trigger('create');
+	
+	var tempo = sessionStorage.getItem('Tempo' + ID);
+	if (sessionStorage.getItem('sessionEstado') == "Offline")
+	{
+		$('#locationAddress').before('<div id="timeinfo"><p>' + tempo + ' &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp kms unavailable</p></div>');
+	} else
+	{
+		$('#locationAddress').before('<div id="timeinfo"><p>' + tempo + ' &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp ' + dist.toFixed(2) + 'km</p></div>');	
+	}
+	
+	GetUserLocation(ID);
+}
+
+function Teste()
+{
+	alert("AKJBDA");
+}
+
+function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) 
+{
+  var R = 6371; // Radius of the earth in km
+  var dLat = deg2rad(lat2-lat1);  // deg2rad below
+  var dLon = deg2rad(lon2-lon1); 
+  var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon/2) * Math.sin(dLon/2); 
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+  var d = R * c; // Distance in km
+  return d;
+}
+
+function deg2rad(deg) 
+{
+  return deg * (Math.PI/180)
 }

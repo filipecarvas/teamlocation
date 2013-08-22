@@ -65,3 +65,11 @@ text-shadow: 0 -1px 1px #00592b;
 background-image: -moz-linear-gradient(top, #006000, #00bf00);
 background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #006000), color-stop(1, #00bf00));
 -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#006000', EndColorStr='#00bf00')"; }
+
+.ui-bar-bluebar {
+    
+}
+
+a.ui-bt-has-count span span.ui-btn-text{ padding-right:0; position:static; }
+
+.ui-page { background: #E0E0E0;}

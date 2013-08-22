@@ -32,10 +32,7 @@
 			<h3>
 				
 			</h3>
-			<a data-role="button" data-theme="b" data-inline="true" data-rel="back" data-icon="back" data-iconpos="left" >
-				Back
-			</a>
-			<a data-role="button" data-theme="g" data-role="button" data-inline="true" class="ui-btn-right" data-icon="home" href="choose.html" >
+			<a data-role="button" data-theme="g" data-role="button" data-inline="true" class="ui-btn-right" data-icon="home" onclick="RedirectHome()">
 				Home
 			</a>
 		</div>
@@ -44,19 +41,15 @@
 				Settings
 			</h3>
 			<div data-role="collapsible-set" data-theme="b">
-				<div data-role="collapsible" data-collapsed="false">
-					<h3>
-						Account
-					</h3>
 					<ul data-role="listview" data-divider-theme="b" data-inset="true">
 						<li data-theme="c">
 							<a onclick="location.href='changemail.html'">
-								Change your email
+								Email
 							</a>
 						</li>
 						<li data-theme="c">
 							<a onclick="location.href='changepassword.html'">
-								Change your password
+								Password
 							</a>
 						</li>
 						<li data-theme="c">
@@ -65,7 +58,6 @@
 							</a>
 						</li>
 					</ul>
-				</div>
 			</div>
 		</div>
 		<div data-theme="a" data-role="footer" data-position="fixed">

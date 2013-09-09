@@ -52,6 +52,11 @@ function bt_AvailableClick()
 	status = "Online";
 	sessionStorage.setItem('sessionEstado', status);
 	
+	//$("#svbutton").removeClass("ui-body-b").addClass("ui-body-c");
+	alert("antes");
+	$("#bt_Available").removeClass("ui-body-b").addClass("ui-body-c");
+	alert("depois");
+	
 	// Verificar se div do mapa existe
 	if (!document.getElementById("map"))
 	{

@@ -39,23 +39,15 @@ var Username;
 
 function bt_AvailableClick() 
 {
-	//alert("1");
-	// Mudar busy para inactivo
-	document.getElementById("span-Busy").style.boxShadow = "";
-	document.getElementById("span-Busy").style.backgroundColor = "rgb(0,0,0)";
-	// Mudar offline para inactivo
-	document.getElementById("span-Offline").style.boxShadow = "inset 0px 0px 0px 0px, 0px 0px 0px 0px";
-	document.getElementById("span-Offline").style.backgroundColor = "rgb(0,0,0)";
-	// Colocar cores em available
-	document.getElementById("span-Available").style.boxShadow = "inset 0px 1px 0px 0px rgba(250,250,250,0.5), 0px 0px 3px 2px rgba(135,187,83,0.5)";
-	document.getElementById("span-Available").style.backgroundColor = "rgb(135,187,83)";
 	status = "Online";
 	sessionStorage.setItem('sessionEstado', status);
 	
-	//$("#svbutton").removeClass("ui-body-b").addClass("ui-body-c");
-	alert("antes");
-	$("#bt_Available").removeClass("ui-body-b").addClass("ui-body-c");
-	alert("depois");
+	// Colocar botao Available a verde
+	$('#bt_Available').buttonMarkup({theme: 'g'});
+	// Colocar botao Busy a default
+	$('#bt_Busy').buttonMarkup({theme: ''});
+	// Colocar botao Offline a default
+	$('#bt_Offline').buttonMarkup({theme: ''});
 	
 	// Verificar se div do mapa existe
 	if (!document.getElementById("map"))
@@ -70,20 +62,18 @@ function bt_AvailableClick()
 		div.parentNode.removeChild(div);
 		getLocation();
 	}
+	window.location = "home.html";
 }
 
 function bt_BusyClick() 
 {
-	//alert("2");
-	// Mudar available para inactivo
-	document.getElementById("span-Available").style.boxShadow = "";
-	document.getElementById("span-Available").style.backgroundColor = "rgb(0,0,0)";
-	// Mudar offline para inactivo
-	document.getElementById("span-Offline").style.boxShadow = "inset 0px 0px 0px 0px, 0px 0px 0px 0px";
-	document.getElementById("span-Offline").style.backgroundColor = "rgb(0,0,0)";
-	// Colocar cores em busy
-	document.getElementById("span-Busy").style.boxShadow = "inset 0px 1px 0px 0px rgba(250,250,250,0.5), 0px 0px 3px 2px rgba(226,0,0,0.5)";
-	document.getElementById("span-Busy").style.backgroundColor = "rgb(226,0,0)";
+	// Colocar botao Busy a vermelho
+	$('#bt_Busy').buttonMarkup({theme: 'r'});
+	// Colocar botao Available a default
+	$('#bt_Available').buttonMarkup({theme: ''});
+	// Colocar botao Offline a default
+	$('#bt_Offline').buttonMarkup({theme: ''});
+	
 	status = "Ocupado";
 	sessionStorage.setItem('sessionEstado', status);
 	
@@ -100,20 +90,18 @@ function bt_BusyClick()
 		div.parentNode.removeChild(div);
 		getLocation();
 	}
+	window.location = "home.html";
 }
 
 function bt_OfflineClick() 
 {
-	//alert("3");
-	// Mudar available para inactivo
-	document.getElementById("span-Available").style.boxShadow = "";
-	document.getElementById("span-Available").style.backgroundColor = "rgb(0,0,0)";
-	// Mudar busy para inactivo
-	document.getElementById("span-Busy").style.boxShadow = "";
-	document.getElementById("span-Busy").style.backgroundColor = "rgb(0,0,0)";
-	// Colocar cores em offline
-	document.getElementById("span-Offline").style.boxShadow = "inset 0px 1px 0px 0px rgba(250,250,250,0.5), 0px 0px 2px 2px rgba(104,104,104,0.5)";
-	document.getElementById("span-Offline").style.backgroundColor = "rgb(104,104,104)";
+	// Colocar botao Offline a Cinzento
+	$('#bt_Offline').buttonMarkup({theme: 'dg'});
+	// Colocar botao Avleailab a default
+	$('#bt_Available').buttonMarkup({theme: ''});
+	// Colocar botao Busy a default
+	$('#bt_Busy').buttonMarkup({theme: ''});
+	
 	// Log
 	status = "Offline";
 	sessionStorage.setItem('sessionEstado', status);
@@ -126,35 +114,55 @@ function bt_OfflineClick()
 	div.parentNode.removeChild(div);
 	var div = document.getElementById('locationAddress');
 	div.innerHTML = '<p><b>Location: </b>unavailable</p>' + '<b>Last location: </b>' + sessionStorage.getItem('sessionAddress');
+	
+	window.location = "home.html";
 }
 
-function LoadSpan(Estado)
+function LoadButton(Estado)
 {
 	if (Estado == "Available")
 	{
-		// Colocar cores em available
-		document.getElementById("span-Available").style.boxShadow = "inset 0px 1px 0px 0px rgba(250,250,250,0.5), 0px 0px 3px 2px rgba(135,187,83,0.5)";
-		document.getElementById("span-Available").style.backgroundColor = "rgb(135,187,83)";
+		// Colocar cor em botao Available
+		$('#bt_Home').buttonMarkup({theme: 'g'});
 	}
 	
 	if (Estado == "Busy")
 	{
-		// Colocar cores em busy
-		document.getElementById("span-Busy").style.boxShadow = "inset 0px 1px 0px 0px rgba(250,250,250,0.5), 0px 0px 3px 2px rgba(226,0,0,0.5)";
-		document.getElementById("span-Busy").style.backgroundColor = "rgb(226,0,0)";
+		// Colocar cor em botao Busy
+		$('#bt_Home').buttonMarkup({theme: 'r'});
 	}
 
 	if (Estado == "Offline")
 	{
-		// Colocar cores em offline
-		document.getElementById("span-Offline").style.boxShadow = "inset 0px 1px 0px 0px rgba(250,250,250,0.5), 0px 0px 2px 2px rgba(104,104,104,0.5)";
-		document.getElementById("span-Offline").style.backgroundColor = "rgb(104,104,104)";
+		// Colocar cor em botao Offline
+		$('#bt_Home').buttonMarkup({theme: 'dg'});
+	}
+}
+
+function LoadButtonUser(Estado)
+{
+	if (Estado == "Available")
+	{
+		// Colocar cor em botao Available
+		$('#bt_User').buttonMarkup({theme: 'g'});
+	}
+	
+	if (Estado == "Busy")
+	{
+		// Colocar cor em botao Busy
+		$('#bt_User').buttonMarkup({theme: 'r'});
+	}
+
+	if (Estado == "Offline")
+	{
+		// Colocar cor em botao Offline
+		$('#bt_User').buttonMarkup({theme: 'dg'});
 	}
 }
 
 function Log(str) 
 {
-	alert("ENTROU LOG");
+	//alert("ENTROU LOG");
 	var DispositivoID = '"' + 2 + '"';
 	var Data = '"' + getTime() + '"';
 	
@@ -188,6 +196,7 @@ function Log(str)
 function getLocation() 
 {
 	//alert("ENTROU LOCATION");
+	$('#loader').show();
 	// Mostrar mapa
 	var Latit;
 	var Longit;
@@ -241,6 +250,7 @@ function getLocation()
 			infowindow.open(map,marker);
 		});
 		geoCode();
+		$('#loader').hide();
 	}
 	
 	function displayError(error) {
@@ -250,6 +260,7 @@ function getLocation()
 				3: 'Request timeout'
 			};
 			alert("Error: " + errors[error.code]);
+			$('#loader').hide();
 	}
 	
 	function parseTimestamp(timestamp) {
@@ -271,11 +282,13 @@ function getLocation()
 			  if (status == google.maps.GeocoderStatus.OK) {
 				address = results[0].formatted_address;
 				$('#locationAddress').append(address);
+				$('#loader').hide();
 				sessionStorage.setItem('sessionAddress', address);
 				infowindow.setContent(results[0].formatted_address);
-				infowindow.open(map, marker);				
+				infowindow.open(map, marker);
 			  } else {
 				alert("Geocoder failed due to: " + status);
+				$('#loader').hide();
 			  }
 			});
 	}
@@ -364,6 +377,7 @@ function Exit()
 function ChangePassword() 
 {
 	//alert("ENT");
+	$('#loader').show();
 	var Email = '"' + sessionStorage.getItem('sessionEmail') + '"';
 	var Old_pw = '"' + document.getElementById("old_password").value  + '"';
 	var Password1 = '"' + document.getElementById("new_password1").value  + '"';
@@ -390,15 +404,18 @@ function ChangePassword()
 						//alert(data.d);
 						if (data.d) 
 						{
-							alert("Password changed!");					
+							alert("Password changed!");
+							$('#loader').hide();
 						} else 
 						{
 							alert("Invalid password!");
+							$('#loader').hide();
 						}
 					}
 					, error: function (xmlHttpRequest, status, err) 
 					{
 						//alert(err.d);
+						$('#loader').hide();
 					}
 		});	
 	} else 
@@ -409,6 +426,8 @@ function ChangePassword()
 
 function ChangeEmail() 
 {
+	$('#loader').show();
+
 	var Email = '"' + sessionStorage.getItem('sessionEmail') + '"';
 	var NewEmail = '"' + document.getElementById("new_email").value  + '"';
 	var Password = '"' + document.getElementById("password").value  + '"';
@@ -435,20 +454,25 @@ function ChangeEmail()
 						alert("Email changed!");
 						sessionStorage.setItem('sessionEmail', NewEmailSemAspas);
 						AlterarEmailLog(OldEmailSemAspas, NewEmailSemAspas);
+						$('#loader').hide();
 					} else 
 					{
 						alert("Invalid email or password!");
+						$('#loader').hide();
 					}
 				}
 				, error: function (xmlHttpRequest, status, err) 
 				{
 					//alert(err.d);
+					$('#loader').hide();
 				}
 	});	
 }
 
 function GetNames()
 {
+	$('#loader').show();
+
 	//alert("Entrou GET NAMES");
 	var Email = '"' + sessionStorage.getItem('sessionEmail') + '"';
 	var Data = '"' + getDate() + '"';
@@ -564,32 +588,36 @@ function CarregarHome()
 			var Minutes = userTime%60;
 			var FinalTime = Hours + "h" + Minutes + "m";
 			
+			$('#loader').hide();
+			
 			// Para qdo o estado é offline
 			if (sessionStorage.getItem('sessionEstado') == "Offline")
 			{
 				if (userTime < 60)
 				{
-					$('#div' + j).after('<div id="location"><p>' + userTime + 'm &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp kms unavailable</p></div>');
+					$('#div' + j).after('<div id="location"><p>' + userTime + 'm &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp distance unavailable</p></div>');
 					sessionStorage.setItem('Tempo' + j, userTime);
 					count--;
 				} else
 				{
-					$('#div' + j).after('<div id="location"><p>' + FinalTime + ' &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp kms unavailable</p></div>');
+					$('#div' + j).after('<div id="location"><p>' + FinalTime + ' &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp distance unavailable</p></div>');
 					sessionStorage.setItem('Tempo' + j, FinalTime);
 					count--;
 				}
+				
+				$('#loader').hide();
 			} else
 			{
 				if (userTime < 60)
 				{
 					if (dist < 0.05)
 					{
-						$('#div' + j).after('<div id="location"><p>' + userTime + 'm &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp ' + dist.toFixed(2) + 'km</p></div>');
+						$('#div' + j).after('<div id="location"><p>' + userTime + ' &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp ' + dist.toFixed(2) + 'km</p></div>');
 						sessionStorage.setItem('Tempo' + j, userTime);
 						count--;	
 					} else
 					{
-						$('#div' + j).after('<div id="location"><p>' + userTime + 'm &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp ' + dist.toFixed(2) + 'km</p></div>');
+						$('#div' + j).after('<div id="location"><p>' + userTime + ' &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp ' + dist.toFixed(2) + 'km</p></div>');
 						sessionStorage.setItem('Tempo' + j, userTime);
 						count--;
 					}
@@ -607,12 +635,15 @@ function CarregarHome()
 						count--;
 					}
 				}
+				$('#loader').hide();
 			}
 		}
 	} else
 	{
+		$('#loader').hide();
 		$('#location').after('<div><h4>No mates on service.</h4></div>');
 	}
+	$('#loader').hide();
 	$('#dinm-buttons').trigger('create');
 }
 
@@ -774,7 +805,7 @@ function GetUsernameByEmail(Email)
 			}
 			, error: function (xmlHttpRequest, status, err) 
 			{
-				alert("Erro: " + err.d);
+				//alert("Erro: " + err.d);
 			}
 	}).responseText;
 
@@ -834,6 +865,7 @@ function parseTime(s) {
 
 function LoadHome()
 {
+	$('#loader').show();
 	// Criar div's
 	$('#button-status').after('<div id="location" class="location"></div>');
 	$('#location').before('<div id="button-status"></div>');
@@ -853,9 +885,9 @@ function LoadHome()
 	}
 	
 	//alert(Estado);
-	$('#button-status').append('<a data-role="button" data-icon="arrow-r" data-iconpos="right" onclick="Redirect()"><span id="span-' + Estado + '"></span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp ' + Estado + '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>');
+	$('#button-status').append('<a id="bt_Home" data-role="button" data-icon="arrow-r" data-iconpos="right" onclick="Redirect()">' + Estado + '</a>');
 	$('#button-status').trigger('create');
-	LoadSpan(Estado);
+	LoadButton(Estado);
 	
 	// Criar div para texto de localização
 	var div = document.getElementById('location');
@@ -914,45 +946,38 @@ function LoadUpdate()
 	var Estado = sessionStorage.getItem('sessionEstado');
 	if (Estado == "Online")
 	{
-		// Mudar busy para inactivo
-		document.getElementById("span-Busy").style.boxShadow = "";
-		document.getElementById("span-Busy").style.backgroundColor = "rgb(0,0,0)";
-		// Mudar offline para inactivo
-		document.getElementById("span-Offline").style.boxShadow = "inset 0px 0px 0px 0px, 0px 0px 0px 0px";
-		document.getElementById("span-Offline").style.backgroundColor = "rgb(0,0,0)";
-		// Colocar cores em available
-		document.getElementById("span-Available").style.boxShadow = "inset 0px 1px 0px 0px rgba(250,250,250,0.5), 0px 0px 3px 2px rgba(135,187,83,0.5)";
-		document.getElementById("span-Available").style.backgroundColor = "rgb(135,187,83)";
+		// Colocar botao Available a verde
+		$('#bt_Available').buttonMarkup({theme: 'g'});
+		// Colocar botao Busy a default
+		$('#bt_Busy').buttonMarkup({theme: ''});
+		// Colocar botao Offline a default
+		$('#bt_Offline').buttonMarkup({theme: ''});
+		
 		Estado = "Available";
 		sessionStorage.setItem('sessionEstado', Estado);
 	}
 	
 	if (Estado == "Ocupado")
 	{
-		// Mudar available para inactivo
-		document.getElementById("span-Available").style.boxShadow = "";
-		document.getElementById("span-Available").style.backgroundColor = "rgb(0,0,0)";
-		// Mudar offline para inactivo
-		document.getElementById("span-Offline").style.boxShadow = "inset 0px 0px 0px 0px, 0px 0px 0px 0px";
-		document.getElementById("span-Offline").style.backgroundColor = "rgb(0,0,0)";
-		// Colocar cores em busy
-		document.getElementById("span-Busy").style.boxShadow = "inset 0px 1px 0px 0px rgba(250,250,250,0.5), 0px 0px 3px 2px rgba(226,0,0,0.5)";
-		document.getElementById("span-Busy").style.backgroundColor = "rgb(226,0,0)";
+		// Colocar botao Busy a vermelho
+		$('#bt_Busy').buttonMarkup({theme: 'r'});
+		// Colocar botao Available a default
+		$('#bt_Available').buttonMarkup({theme: ''});
+		// Colocar botao Offline a default
+		$('#bt_Offline').buttonMarkup({theme: ''});
+		
 		Estado = "Busy";
 		sessionStorage.setItem('sessionEstado', Estado);
 	}
 	
 	if (Estado == "Offline")
 	{
-		// Mudar available para inactivo
-		document.getElementById("span-Available").style.boxShadow = "";
-		document.getElementById("span-Available").style.backgroundColor = "rgb(0,0,0)";
-		// Mudar busy para inactivo
-		document.getElementById("span-Busy").style.boxShadow = "";
-		document.getElementById("span-Busy").style.backgroundColor = "rgb(0,0,0)";
-		// Colocar cores em offline
-		document.getElementById("span-Offline").style.boxShadow = "inset 0px 1px 0px 0px rgba(250,250,250,0.5), 0px 0px 2px 2px rgba(104,104,104,0.5)";
-		document.getElementById("span-Offline").style.backgroundColor = "rgb(104,104,104)";
+		// Colocar botao Offline a Cinzento
+		$('#bt_Offline').buttonMarkup({theme: 'dg'});
+		// Colocar botao Avleailab a default
+		$('#bt_Available').buttonMarkup({theme: ''});
+		// Colocar botao Busy a default
+		$('#bt_Busy').buttonMarkup({theme: ''});
 	}
 	
 	// Verificar se div do mapa existe
@@ -1015,16 +1040,18 @@ function LoadUserInfo()
 	
 	var dist = getDistanceFromLatLonInKm(LatUser1, LonUser1, LatUser2, LonUser2);
 	
-	$('#button-estado').append('<a data-role="button" data-corners="false">' + _Estado + '</a>');
+	$('#button-estado').append('<a id="bt_User" data-role="button" data-corners="false">' + _Estado + '</a>');
 	$('#button-estado').trigger('create');
+	//alert(Estado);
+	LoadButtonUser(_Estado);
 	
 	var tempo = sessionStorage.getItem('Tempo' + ID);
 	if (sessionStorage.getItem('sessionEstado') == "Offline")
 	{
-		$('#locationAddress').before('<div id="timeinfo"><p>' + tempo + ' &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp kms unavailable</p></div>');
+		$('#locationAddress').before('<div id="timeinfo"><p>' + tempo + 'm &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp distance unavailable</p></div>');
 	} else
 	{
-		$('#locationAddress').before('<div id="timeinfo"><p>' + tempo + ' &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp ' + dist.toFixed(2) + 'km</p></div>');	
+		$('#locationAddress').before('<div id="timeinfo"><p>' + tempo + 'm &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp ' + dist.toFixed(2) + 'km</p></div>');	
 	}
 	
 	GetUserLocation(ID);

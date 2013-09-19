@@ -1,8 +1,66 @@
 <html>
 	<head>
+		<link rel="stylesheet" href="https://d10ajoocuyu32n.cloudfront.net/mobile/1.3.1/jquery.mobile-1.3.1.min.css">
+		<link rel="stylesheet" href="css/opt.css">
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link rel="stylesheet" type="text/css" href="css/styleoptinial.css" />
+		  
+		<!-- jQuery and jQuery Mobile -->
+		<script src="js/jquery-1.9.1.min.js"></script>
+		<script src="js/jquery.mobile-1.3.1.min.js"></script>
+		
+		<script type="text/javascript">
+			function ChangeA()
+			{
+				$('#bt_Available').buttonMarkup({theme: 'g'});
+			}
+			
+			function ChangeB()
+			{
+				$('#bt_Busy').buttonMarkup({theme: 'r'});
+			}
+			
+			function ChangeC()
+			{
+				$('#bt_Offline').buttonMarkup({theme: 'dg'});
+			}
+			
+			function ChangeD()
+			{
+				$('#bt_blue').buttonMarkup({theme: ''});
+			}
+			
+			function ChangeF()
+			{
+				$('#bt_User').buttonMarkup({theme: 'g'});
+			}
+			
+			function Loading()
+			{
+				$('#loader').show();
+				//$.mobile.showPageLoadingMsg("a", "");
+			}
+			
+			function Hide()
+			{
+				$('#loader').hide(); 
+				//$.mobile.hidePageLoadingMsg();
+			}	
+		</script>
 		
 	</head>
 	<body>
-		
+		<div id="Outro">
+			<a id="bt_Available" data-role="button" onclick="ChangeA()">Available</a>
+			<a id="bt_Busy" data-role="button" onclick="ChangeB()">Busy</a>
+			<a id="bt_Offline" data-role="button" onclick="ChangeC()">Offline</a>
+			<a id="bt_blue" data-theme="blue" data-role="button" onclick="ChangeD()">Blue</a>
+			<a data-role="button" onclick="Loading()">Load</a>
+			<a data-role="button" onclick="Hide()">Hide</a>
+			<a id="bt_User" data-role="button" data-corners="false" onclick="ChangeF()">Filipe</a>
+		</div>
+		<div id="loader">
+			<img src="img/ajax-loader.gif" class="ajax-loader"/>
+		</div>
 	</body>
 </html>

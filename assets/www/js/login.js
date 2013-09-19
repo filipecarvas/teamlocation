@@ -11,6 +11,8 @@ function Login()
 	//var jsonText = JSON.stringify(login);
 	//alert(jsonText);
 	
+	$('#loader').show();
+	
 	sessionStorage.setItem('sessionEmail', null); 
 	
 	email = '"' + document.getElementById("email").value + '"';
@@ -33,7 +35,8 @@ function Login()
 					//alert(data.d);
 					if (data.d) 
 					{
-						alert("Login successful!");
+						//alert("Login successful!");
+						$('#loader').hide();
 						sessionStorage.setItem('sessionEmail', document.getElementById("email").value);
 						sessionStorage.setItem('sessionEstado', "Offline");
 						window.location = "home.html";
@@ -41,10 +44,12 @@ function Login()
 					} else 
 					{
 						alert("Invalid login!");
+						$('#loader').hide();
 					}
                 }
                 , error: function (xmlHttpRequest, status, err) {
                     alert(err.d);
+					$('#loader').hide();
                 }
             });	
 }

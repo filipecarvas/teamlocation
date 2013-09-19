@@ -4,7 +4,7 @@
 		<script type="text/javascript">
 			if (sessionStorage.getItem('sessionEmail') == null || undefined)
 			{
-				window.location = "index.html";
+				//window.location = "index.html";
 			}
 		</script>
 	
@@ -24,6 +24,7 @@
 		
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
 		<link rel="stylesheet" href="https://d10ajoocuyu32n.cloudfront.net/mobile/1.3.1/jquery.mobile-1.3.1.min.css">
+		<link rel="stylesheet" href="css/styleoptinial.css">
 		<link rel="stylesheet" href="css/styleoptinial.css">
 		
 		<!-- Extra Codiqa features -->
@@ -64,10 +65,10 @@
 		<div data-role="page" id="page1">
 			<div id="header" data-theme="a" data-role="header" data-position="fixed">
 				<h3></h3>
-				<a data-theme="f" data-role="button" data-inline="true" class="ui-btn-left" data-icon="gear" onclick="location.href='settings.html'">
+				<a data-theme="blue" data-role="button" data-inline="true" class="ui-btn-left" data-icon="gear" onclick="location.href='settings.html'">
 					Settings
 				</a>
-				<a data-theme="g" data-role="button" data-inline="true" class="ui-btn-right" data-icon="home" data-rel="back">
+				<a data-theme="blue" data-role="button" data-inline="true" class="ui-btn-right" data-icon="home" data-rel="back">
 					Home
 				</a>
 			</div>
@@ -75,23 +76,11 @@
 				<div id="location">
 					
 				</div>
-				<a id="bt_Available" data-theme="b" data-role="button" onclick="bt_AvailableClick()">
-					<span id="span-Available"></span>
-					&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-					Available&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp				
-				</a>
+				<a id="bt_Available" data-role="button" onclick="bt_AvailableClick()">Available</a>
 				
-				<a data-role="button" onclick="bt_BusyClick()">
-					<span id="span-Busy"></span>
-					&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-					Busy&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp			
-				</a>
+				<a id="bt_Busy"data-role="button" onclick="bt_BusyClick()">Busy</a>
 				
-				<a data-role="button" onclick="bt_OfflineClick()" text-align="center">
-					<span id="span-Offline"></span>
-					&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-					Offline&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-				</a>
+				<a id="bt_Offline" data-role="button" onclick="bt_OfflineClick()" >Offline</a>
 			</div>
 			
 			<div id="locationAddress">
@@ -104,6 +93,9 @@
 					
 				</h3>
 			</div>
+		</div>
+		<div id="loader">
+			<img src="img/ajax-loader3.gif" class="ajax-loader"/>
 		</div>
 		<script type="text/javascript" src="js/index.js"></script>
 		<script type="text/javascript" src="js/login.js"></script>

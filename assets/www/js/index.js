@@ -490,40 +490,53 @@ function GetNames()
 			, data: '{ "Data":' + Data + ',"Email":' + Email + ' }'
 			, crossDomain: true
 			, success: function (data, status) {
-					//alert("SUCESSO!");
-					// Buscar string com os dados
-					var str = JSON.stringify(data.d);
-					
-					// Retirar as aspas da string
-					str = replaceAll(str, '"', "");
-					
-					// Retirar os []
-					str = replaceAll(str, '[', "");
-					str = replaceAll(str, ']', "");
-					
-					// Retirar espaços
-					str = replaceAll(str, " ", "");
-					
-					// Colocar Array em Session
-					sessionStorage.setItem('sessionUsers', str);
-					
-					CarregarHome();
-					
-					// Obter string colocada em sessão ****** NOTA: FAZER ISTO E PASSOS IMEDIATAMENTE A SEGUIR QUANDO FOR PARA OBTER VAR SESSÃO
-					var dados = (sessionStorage.getItem('sessionUsers'));
-					
-					// Split e colocar em array
-					var arrayFinal = new Array();
-					arrayFinal = dados.split(",");
-					
-					//alert(arrayFinal);
-					//alert(arrayFinal[0]);
-					//alert(arrayFinal[5]);
+					if (data.d == "")
+					{
+						//alert(data.d);
+						//alert("NULL");
+						$('#loader').hide();
+						var div = document.getElementById('dinm-buttons');
+						div.innerHTML = "No users on service.";
+					} else
+					{
+						//alert(data.d);
+						//alert("SUCESSO!");
+						// Buscar string com os dados
+						var str = JSON.stringify(data.d);
+						
+						// Retirar as aspas da string
+						str = replaceAll(str, '"', "");
+						
+						// Retirar os []
+						str = replaceAll(str, '[', "");
+						str = replaceAll(str, ']', "");
+						
+						// Retirar espaços
+						str = replaceAll(str, " ", "");
+						
+						// Colocar Array em Session
+						sessionStorage.setItem('sessionUsers', str);
+						
+						CarregarHome();
+						
+						// Obter string colocada em sessão ****** NOTA: FAZER ISTO E PASSOS IMEDIATAMENTE A SEGUIR QUANDO FOR PARA OBTER VAR SESSÃO
+						var dados = (sessionStorage.getItem('sessionUsers'));
+						
+						// Split e colocar em array
+						var arrayFinal = new Array();
+						arrayFinal = dados.split(",");
+						
+						//alert(arrayFinal);
+						//alert(arrayFinal[0]);
+						//alert(arrayFinal[5]);
+					}
 				}
 				, error: function (xmlHttpRequest, status, err) 
 				{
 					var div = document.getElementById('dinm-buttons');
-					div.innerHTML = "No results.";	
+					div.innerHTML = "No users on service.";
+					div.style.position = "center";
+					$('#loader').hide();
 					//alert(err.d);
 				}
 	});	
@@ -603,8 +616,7 @@ function CarregarHome()
 					$('#div' + j).after('<div id="location"><p>' + FinalTime + ' &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp distance unavailable</p></div>');
 					sessionStorage.setItem('Tempo' + j, FinalTime);
 					count--;
-				}
-				
+				}		
 				$('#loader').hide();
 			} else
 			{
@@ -612,12 +624,12 @@ function CarregarHome()
 				{
 					if (dist < 0.05)
 					{
-						$('#div' + j).after('<div id="location"><p>' + userTime + ' &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp ' + dist.toFixed(2) + 'km</p></div>');
+						$('#div' + j).after('<div id="location"><p>' + userTime + 'm &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp ' + dist.toFixed(2) + 'km</p></div>');
 						sessionStorage.setItem('Tempo' + j, userTime);
 						count--;	
 					} else
 					{
-						$('#div' + j).after('<div id="location"><p>' + userTime + ' &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp ' + dist.toFixed(2) + 'km</p></div>');
+						$('#div' + j).after('<div id="location"><p>' + userTime + 'm &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp ' + dist.toFixed(2) + 'km</p></div>');
 						sessionStorage.setItem('Tempo' + j, userTime);
 						count--;
 					}
@@ -1048,10 +1060,10 @@ function LoadUserInfo()
 	var tempo = sessionStorage.getItem('Tempo' + ID);
 	if (sessionStorage.getItem('sessionEstado') == "Offline")
 	{
-		$('#locationAddress').before('<div id="timeinfo"><p>' + tempo + 'm &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp distance unavailable</p></div>');
+		$('#locationAddress').before('<div id="timeinfo"><p>' + tempo + ' &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp distance unavailable</p></div>');
 	} else
 	{
-		$('#locationAddress').before('<div id="timeinfo"><p>' + tempo + 'm &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp ' + dist.toFixed(2) + 'km</p></div>');	
+		$('#locationAddress').before('<div id="timeinfo"><p>' + tempo + ' &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp ' + dist.toFixed(2) + 'km</p></div>');	
 	}
 	
 	GetUserLocation(ID);

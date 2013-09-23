@@ -1164,9 +1164,9 @@ function TesteLog()
 	var Estado = sessionStorage.getItem('sessionEstado');
 	if (Estado == "Offline")
 	{
-		alert("Estado Offline. Não faz nada aqui!");
+		//alert("Estado Offline. Não faz nada aqui!");
 	} else
 	{
-		alert("Estado Available ou Busy. Faz Log!");
+		//alert("Estado Available ou Busy. Faz Log!");
 	}
 }

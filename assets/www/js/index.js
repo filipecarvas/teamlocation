@@ -30,6 +30,8 @@
     }
 };
 */
+
+var ArrayColors = new Array();
 var UserAddress;
 var address;
 var status;
@@ -110,10 +112,10 @@ function bt_OfflineClick()
 	var div = document.getElementById("map");
 	div.parentNode.removeChild(div);
 	// Colocar texto
-	div = document.getElementById("locationAddress");
-	div.parentNode.removeChild(div);
-	var div = document.getElementById('locationAddress');
-	div.innerHTML = '<p><b>Location: </b>unavailable</p>' + '<b>Last location: </b>' + sessionStorage.getItem('sessionAddress');
+	//div = document.getElementById("locationAddress");
+	//div.parentNode.removeChild(div);
+	//var div = document.getElementById('locationAddress');
+	//div.innerHTML = '<p><b>Location: </b>unavailable</p>' + '<b>Last location: </b>' + sessionStorage.getItem('sessionAddress');
 	
 	window.location = "home.html";
 }
@@ -139,24 +141,60 @@ function LoadButton(Estado)
 	}
 }
 
-function LoadButtonUser(Estado)
+function LoadButtonUser(EstadoUser)
 {
-	if (Estado == "Available")
+	if (EstadoUser == "Available")
 	{
 		// Colocar cor em botao Available
 		$('#bt_User').buttonMarkup({theme: 'g'});
 	}
 	
-	if (Estado == "Busy")
+	if (EstadoUser == "Busy")
 	{
 		// Colocar cor em botao Busy
 		$('#bt_User').buttonMarkup({theme: 'r'});
 	}
 
-	if (Estado == "Offline")
+	if (EstadoUser == "Offline")
 	{
 		// Colocar cor em botao Offline
 		$('#bt_User').buttonMarkup({theme: 'dg'});
+	}
+}
+
+function LoadButtonsColorHome()
+{
+	//alert("COLORS");
+	
+	for(var k = 0; k < ArrayColors.length; (k+=2))
+	{
+		//alert("K:" + k);
+		var divID = ArrayColors[parseInt(k)];
+		var EstadoUser = ArrayColors[parseInt(k) + 1];
+		//alert(ArrayColors);
+		//alert("AQUi "+ divID);
+		//alert("Estado User: "+ EstadoUser);
+		
+		if (EstadoUser == "Available")
+		{
+			//alert("ON");
+			// Colocar cor em botao Available
+			$("#" + divID).buttonMarkup({theme: 'g'});
+		}
+		
+		if (EstadoUser == "Busy")
+		{
+			//alert("BU");
+			// Colocar cor em botao Busy
+			$("#" + divID).buttonMarkup({theme: 'r'});
+		}
+
+		if (EstadoUser == "Offline")
+		{
+			//alert("OFF");
+			// Colocar cor em botao Offline
+			$("#" + divID).buttonMarkup({theme: 'dg'});
+		}
 	}
 }
 
@@ -406,6 +444,7 @@ function ChangePassword()
 						{
 							alert("Password changed!");
 							$('#loader').hide();
+							window.location = "settings.html";
 						} else 
 						{
 							alert("Invalid password!");
@@ -455,6 +494,7 @@ function ChangeEmail()
 						sessionStorage.setItem('sessionEmail', NewEmailSemAspas);
 						AlterarEmailLog(OldEmailSemAspas, NewEmailSemAspas);
 						$('#loader').hide();
+						window.location = "settings.html";
 					} else 
 					{
 						alert("Invalid email or password!");
@@ -573,6 +613,7 @@ function CarregarHome()
 			for(var i = j; i < arrayDados.length; (i+=1))
 			{
 				var _Email = arrayDados[parseInt(j)];
+				var _Estado = arrayDados[parseInt(j) + 1];
 				var _Hora = arrayDados[parseInt(j) + 2];
 				var _Lat = arrayDados[parseInt(j) + 3];
 				var _Long = "-" + arrayDados[parseInt(j) + 4];
@@ -590,6 +631,11 @@ function CarregarHome()
 			
 			//$('#MatesBar').after('<input type="button" value="' + arrayDados[j] + '" onclick="SetLocationUserID(' + j + ')"/>');
 			$('#dinm-buttons').append('<a id="div' + j + '" data-role="button" data-icon="arrow-r" data-iconpos="right" onclick="SetLocationUserID(' + j + ')">' + GetUsernameByEmail(arrayDados[j]) + '</a>');
+			//alert("div"+j);
+			//var divID = "div" + j;
+			ArrayColors.push("div" + j);
+			ArrayColors.push(_Estado);
+			//alert(ArrayColors);
 			
 			// System time
 			var time = new Date();
@@ -657,6 +703,8 @@ function CarregarHome()
 	}
 	$('#loader').hide();
 	$('#dinm-buttons').trigger('create');
+	// Load Colors
+	LoadButtonsColorHome();	
 }
 
 function SetLocationUserID(UserID)
@@ -759,7 +807,7 @@ function AlterarEmailLog(OldEmail, NewEmail)
 				}
 				, error: function (xmlHttpRequest, status, err) 
 				{
-					alert("Erro: " + err.d);
+					//alert("Erro: " + err.d);
 				}
 	});	
 }
@@ -788,7 +836,7 @@ function LoadUserFooter()
 			}
 			, error: function (xmlHttpRequest, status, err) 
 			{
-				alert("Erro: " + err.d);
+				//alert("Erro: " + err.d);
 			}
 	});	
 }
@@ -935,6 +983,7 @@ function RefreshHome()
 	div = document.getElementById("dinm-buttons");
 	div.parentNode.removeChild(div);
 	
+	ArrayColors.length = 0;
 	LoadHome();
 }
 
@@ -1088,4 +1137,30 @@ function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2)
 function deg2rad(deg) 
 {
   return deg * (Math.PI/180)
+}
+
+function LoadTimer()
+{
+	window.setInterval(function(){
+		CallLog();
+	}, 5000);
+}
+
+function CallLog()
+{
+	//var Estado = sessionStorage.getItem('sessionEstado');
+	//Log(Estado);
+	TesteLog();
+}
+
+function TesteLog()
+{
+	var Estado = sessionStorage.getItem('sessionEstado');
+	if (Estado == "Offline")
+	{
+		alert("Estado Offline. Não faz nada aqui!");
+	} else
+	{
+		alert("Estado Available ou Busy. Faz Log!");
+	}
 }

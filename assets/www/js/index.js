@@ -460,6 +460,7 @@ function ChangePassword()
 	} else 
 	{
 		alert("Invalid new password!");
+		$('#loader').hide();
 	}
 }
 
@@ -645,7 +646,7 @@ function CarregarHome()
 			
 			var Hours = Math.floor(userTime/60);
 			var Minutes = userTime%60;
-			var FinalTime = Hours + "h" + Minutes + "m";
+			var FinalTime = Hours + "h" + Minutes;
 			
 			$('#loader').hide();
 			
@@ -683,12 +684,12 @@ function CarregarHome()
 				{
 					if(dist < 0.05)
 					{
-						$('#div' + j).after('<div id="location"><p>' + FinalTime + ' &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp ' + dist.toFixed(2) + 'km</p></div>');
+						$('#div' + j).after('<div id="location"><p>' + FinalTime + 'm &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp ' + dist.toFixed(2) + 'km</p></div>');
 						sessionStorage.setItem('Tempo' + j, FinalTime);
 						count--;	
 					} else
 					{
-						$('#div' + j).after('<div id="location"><p>' + FinalTime + ' &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp ' + dist.toFixed(2) + 'km</p></div>');
+						$('#div' + j).after('<div id="location"><p>' + FinalTime + 'm &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp ' + dist.toFixed(2) + 'km</p></div>');
 						sessionStorage.setItem('Tempo' + j, FinalTime);
 						count--;
 					}
@@ -997,6 +998,11 @@ function RedirectHome()
 	window.location = "home.html";
 }
 
+function RedirectHome()
+{
+	window.location = "home.html";
+}
+
 function LoadUpdate()
 {
 	var email = sessionStorage.getItem('sessionEmail')
@@ -1101,7 +1107,7 @@ function LoadUserInfo()
 	
 	var dist = getDistanceFromLatLonInKm(LatUser1, LonUser1, LatUser2, LonUser2);
 	
-	$('#button-estado').append('<a id="bt_User" data-role="button" data-corners="false">' + _Estado + '</a>');
+	$('#button-estado').append('<a id="bt_User" data-role="button" data-corners="false" onclick="RedirectHome()">' + _Estado + '</a>');
 	$('#button-estado').trigger('create');
 	//alert(Estado);
 	LoadButtonUser(_Estado);
@@ -1109,10 +1115,10 @@ function LoadUserInfo()
 	var tempo = sessionStorage.getItem('Tempo' + ID);
 	if (sessionStorage.getItem('sessionEstado') == "Offline")
 	{
-		$('#locationAddress').before('<div id="timeinfo"><p>' + tempo + ' &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp distance unavailable</p></div>');
+		$('#locationAddress').before('<div id="timeinfo"><p>' + tempo + 'm &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp distance unavailable</p></div>');
 	} else
 	{
-		$('#locationAddress').before('<div id="timeinfo"><p>' + tempo + ' &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp ' + dist.toFixed(2) + 'km</p></div>');	
+		$('#locationAddress').before('<div id="timeinfo"><p>' + tempo + 'm &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp ' + dist.toFixed(2) + 'km</p></div>');	
 	}
 	
 	GetUserLocation(ID);

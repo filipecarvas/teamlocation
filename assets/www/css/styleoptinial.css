@@ -131,7 +131,7 @@ background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, 
 /*******************************************************/
 
 .ui-bar-bluebar {
-    
+    background-color: #3a4669;
 }
 
 a.ui-bt-has-count span span.ui-btn-text{ padding-right:0; position:static; }

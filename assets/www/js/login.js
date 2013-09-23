@@ -48,7 +48,7 @@ function Login()
 					}
                 }
                 , error: function (xmlHttpRequest, status, err) {
-                    alert(err.d);
+                    alert("Connection error.");
 					$('#loader').hide();
                 }
             });	

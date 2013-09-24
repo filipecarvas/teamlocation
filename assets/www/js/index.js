@@ -64,20 +64,19 @@ function bt_AvailableClick()
 		div.parentNode.removeChild(div);
 		getLocation();
 	}
-	window.location = "home.html";
 }
 
 function bt_BusyClick() 
 {
+	status = "Ocupado";
+	sessionStorage.setItem('sessionEstado', status);
+
 	// Colocar botao Busy a vermelho
 	$('#bt_Busy').buttonMarkup({theme: 'r'});
 	// Colocar botao Available a default
 	$('#bt_Available').buttonMarkup({theme: ''});
 	// Colocar botao Offline a default
 	$('#bt_Offline').buttonMarkup({theme: ''});
-	
-	status = "Ocupado";
-	sessionStorage.setItem('sessionEstado', status);
 	
 	// Verificar se div do mapa existe
 	if (!document.getElementById("map"))
@@ -92,11 +91,13 @@ function bt_BusyClick()
 		div.parentNode.removeChild(div);
 		getLocation();
 	}
-	window.location = "home.html";
 }
 
 function bt_OfflineClick() 
 {
+	status = "Offline";
+	sessionStorage.setItem('sessionEstado', status);
+
 	// Colocar botao Offline a Cinzento
 	$('#bt_Offline').buttonMarkup({theme: 'dg'});
 	// Colocar botao Avleailab a default
@@ -105,30 +106,27 @@ function bt_OfflineClick()
 	$('#bt_Busy').buttonMarkup({theme: ''});
 	
 	// Log
-	status = "Offline";
-	sessionStorage.setItem('sessionEstado', status);
 	Log(status);
 	// Remover div mapa
 	var div = document.getElementById("map");
-	div.parentNode.removeChild(div);
 	// Colocar texto
 	//div = document.getElementById("locationAddress");
 	//div.parentNode.removeChild(div);
 	//var div = document.getElementById('locationAddress');
 	//div.innerHTML = '<p><b>Location: </b>unavailable</p>' + '<b>Last location: </b>' + sessionStorage.getItem('sessionAddress');
-	
-	window.location = "home.html";
+	RedirectHome();
 }
 
+// Load buttons color HOME
 function LoadButton(Estado)
 {
-	if (Estado == "Available")
+	if (Estado == "Available" || Estado == "Online")
 	{
 		// Colocar cor em botao Available
 		$('#bt_Home').buttonMarkup({theme: 'g'});
 	}
 	
-	if (Estado == "Busy")
+	if (Estado == "Busy" || Estado == "Ocupado")
 	{
 		// Colocar cor em botao Busy
 		$('#bt_Home').buttonMarkup({theme: 'r'});
@@ -141,16 +139,20 @@ function LoadButton(Estado)
 	}
 }
 
+// Load Button color USER INFO
 function LoadButtonUser(EstadoUser)
 {
-	if (EstadoUser == "Available")
+	//alert("Estado home: " + EstadoUser);
+	if (EstadoUser == "Available" || EstadoUser == "Online")
 	{
+		//alert("G");
 		// Colocar cor em botao Available
 		$('#bt_User').buttonMarkup({theme: 'g'});
 	}
 	
-	if (EstadoUser == "Busy")
+	if (EstadoUser == "Busy" || EstadoUser == "Ocupado")
 	{
+		//alert("R");
 		// Colocar cor em botao Busy
 		$('#bt_User').buttonMarkup({theme: 'r'});
 	}
@@ -162,6 +164,7 @@ function LoadButtonUser(EstadoUser)
 	}
 }
 
+// Load buttons color USERS HOME
 function LoadButtonsColorHome()
 {
 	//alert("COLORS");
@@ -175,14 +178,14 @@ function LoadButtonsColorHome()
 		//alert("AQUi "+ divID);
 		//alert("Estado User: "+ EstadoUser);
 		
-		if (EstadoUser == "Available")
+		if (EstadoUser == "Available" || EstadoUser == "Online")
 		{
 			//alert("ON");
 			// Colocar cor em botao Available
 			$("#" + divID).buttonMarkup({theme: 'g'});
 		}
 		
-		if (EstadoUser == "Busy")
+		if (EstadoUser == "Busy" || EstadoUser == "Ocupado")
 		{
 			//alert("BU");
 			// Colocar cor em botao Busy
@@ -210,7 +213,7 @@ function Log(str)
 	var Coordenadas = getCoord();
 		
 	var Message = '"Utilizador:' + User2 + ' , Estado:' + Estado + ' , Coordenadas[' + Coordenadas + ']' + '"';
-	var Descricao = '"Gestão de equipas"';
+	var Descricao = '"team.location"';
 	
 	$.support.cors = true;
 	$.mobile.allowCrossDomainPages = true;
@@ -232,6 +235,113 @@ function Log(str)
 }
 
 function getLocation() 
+{
+	//alert("ENTROU LOCATION");
+	$('#loader').show();
+	// Mostrar mapa
+	var Latit;
+	var Longit;
+		
+	if (navigator.geolocation) {
+		//alert("ENTROU NAVIGATOR");
+		var timeoutVal = 10 * 1000 * 1000;
+		navigator.geolocation.getCurrentPosition(
+			displayPosition, 
+			displayError,
+			{ enableHighAccuracy: true, timeout: timeoutVal, maximumAge: 0 }
+		);
+	}
+	else {
+		alert("Geolocation is not supported on this device.");
+	}
+		
+	function displayPosition(position) {
+		//alert("ENTROU DISPLAYPOSITION");
+		var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+		Latit = position.coords.latitude;
+		Longit = position.coords.longitude;
+		sessionStorage.setItem('sessionLat1', Latit);
+		sessionStorage.setItem('sessionLon1', Longit);
+		//alert(Latit);
+		//alert(Longit);
+		// Colocar Coordenadas em var global
+		setCoord(Latit,Longit);
+		// Inserir BD
+		Log((sessionStorage.getItem('sessionEstado')));
+		//Criar div após saber localização
+		//$('#divcontent').after('<div id="locationAddress"></div>');
+		//$('#locationAddress').after('<br /><div id="map"></div>');
+		//$('#map').before('<br />');
+		//var options = {
+		//	zoom: 17,
+		//	center: pos,
+		//	mapTypeId: google.maps.MapTypeId.ROADMAP
+		//};
+		//var map = new google.maps.Map(document.getElementById("map"), options);
+		//var marker = new google.maps.Marker({
+		//	position: pos,
+		//	map: map,
+		//	title: "User location"
+		//});
+		//var contentString = "<b>Timestamp:</b> " + parseTimestamp(position.timestamp) + "<br/><b>User location:</b> lat " + position.coords.latitude + ", long " + position.coords.longitude + ", accuracy " + position.coords.accuracy;
+		//var infowindow = new google.maps.InfoWindow({
+		//	content: contentString
+		//});
+		//google.maps.event.addListener(marker, 'click', function() {
+		//	infowindow.open(map,marker);
+		//});
+		//var div_address = document.getElementById("locationAddress");
+		//var div_map = document.getElementById("map");
+		//div.parentNode.removeChild(div_address);
+		//div.parentNode.removeChild(div_map);
+		geoCode();
+		$('#loader').hide();
+	}
+	
+	function displayError(error) {
+			var errors = { 
+				1: 'Permission denied',
+				2: 'Position unavailable',
+				3: 'Request timeout'
+			};
+			alert("Error: " + errors[error.code]);
+			$('#loader').hide();
+	}
+	
+	function parseTimestamp(timestamp) {
+			var d = new Date(timestamp);
+			var day = d.getDate();
+			var month = d.getMonth() + 1;
+			var year = d.getFullYear();
+			var hour = d.getHours();
+			var mins = d.getMinutes();
+			var secs = d.getSeconds();
+			var msec = d.getMilliseconds();
+			return day + "." + month + "." + year + " " + hour + ":" + mins + ":" + secs + "," + msec;
+	}
+		
+	function geoCode() {
+			//alert("Entrou GeoCode.");
+			var geocoder = new google.maps.Geocoder();
+			var latlng = new google.maps.LatLng(Latitude, Longitude);
+			geocoder.geocode({'latLng': latlng}, function(results, status) {
+			  if (status == google.maps.GeocoderStatus.OK) {
+				address = results[0].formatted_address;
+				sessionStorage.setItem('sessionAddress', address);
+				RedirectHome();
+				//$('#locationAddress').append(address);
+				$('#loader').hide();
+				//infowindow.setContent(results[0].formatted_address);
+				//infowindow.open(map, marker);
+			  } else {
+				//alert("Geocoder failed due to: " + status);
+				$('#loader').hide();
+			  }
+			});
+	}
+}
+
+function getLocationSemRedirect() 
 {
 	//alert("ENTROU LOCATION");
 	$('#loader').show();
@@ -314,6 +424,7 @@ function getLocation()
 	}
 		
 	function geoCode() {
+			//alert("Entrou GeoCode.");
 			var geocoder = new google.maps.Geocoder();
 			var latlng = new google.maps.LatLng(Latitude, Longitude);
 			geocoder.geocode({'latLng': latlng}, function(results, status) {
@@ -998,11 +1109,6 @@ function RedirectHome()
 	window.location = "home.html";
 }
 
-function RedirectHome()
-{
-	window.location = "home.html";
-}
-
 function LoadUpdate()
 {
 	var email = sessionStorage.getItem('sessionEmail')
@@ -1050,7 +1156,7 @@ function LoadUpdate()
 	// Verificar se div do mapa existe
 	if (!document.getElementById("map"))
 	{
-		getLocation();
+		getLocationSemRedirect();
 	} else 
 	{
 		// Remover div mapa

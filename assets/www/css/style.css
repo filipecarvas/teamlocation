@@ -216,6 +216,10 @@ background:-webkit-linear-gradient(top, #d1d1d1 0%,#ECECEC 100%);
 	display: none;
 }
 
+#UserFooter {
+	
+}
+
 /* Portrait layout (default) */
 .app {
     background:url(../img/logo.png) no-repeat center top; /* 170px x 200px */

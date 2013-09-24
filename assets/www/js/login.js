@@ -48,7 +48,7 @@ function Login()
 					}
                 }
                 , error: function (xmlHttpRequest, status, err) {
-                    alert("Connection error.");
+                    alert("Check connection.");
 					$('#loader').hide();
                 }
             });	

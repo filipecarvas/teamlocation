@@ -751,16 +751,33 @@ function CarregarHome()
 			
 			// System time
 			var time = new Date();
-			var systemTime = time.getHours() + ":" + time.getMinutes();
+			var systemTime = time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds();
+			
+			// Obter apenas os segundos do Sistema
+			var ArraySecondsSystem = new Array();
+			ArraySecondsSystem = systemTime.split(":");
+			SecondsSystem = ArraySecondsSystem[2];
+			
+			// Obter apenas os segundos do User
+			var ArraySecondsUser = new Array();
+			ArraySecondsUser = _Hora.split(":");
+			SecondsUser = ArraySecondsUser[2];
+			
+			Seconds = SecondsSystem - SecondsUser;
+			
+			var a = systemTime.split(':'); // split it at the colons
+
+			var SEC = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
+			//alert("ADASD: "+ SEC);
 			
 			var userTime = parseTime(systemTime) - parseTime(_Hora);
 			
-			var Hours = Math.floor(userTime/60);
-			var Minutes = userTime%60;
+			var Hours = Math.floor(userTime / 60);
+			var Minutes = userTime % 60;
+		
 			var FinalTime = Hours + "h" + Minutes;
 			
 			$('#loader').hide();
-			
 			// Para qdo o estado é offline
 			if (sessionStorage.getItem('sessionEstado') == "Offline")
 			{
@@ -771,7 +788,7 @@ function CarregarHome()
 					count--;
 				} else
 				{
-					$('#div' + j).after('<div id="location"><p>' + FinalTime + ' &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp distance unavailable</p></div>');
+					$('#div' + j).after('<div id="location"><p>' + FinalTime + 'm &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp distance unavailable</p></div>');
 					sessionStorage.setItem('Tempo' + j, FinalTime);
 					count--;
 				}		

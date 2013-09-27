@@ -234,9 +234,45 @@ function Log(str)
             });
 }
 
+function LogRefresh(str) 
+{
+	//alert("ENTROU LOG RERRESH");
+	var DispositivoID = '"' + 2 + '"';
+	var Data = '"' + getTime() + '"';
+	
+	var User2 = sessionStorage.getItem('sessionEmail');
+	//alert(User2);
+	var Estado = str;
+	var Coordenadas = getCoord();
+		
+	var Message = '"Utilizador:' + User2 + ' , Estado:' + Estado + ' , Coordenadas[' + Coordenadas + ']' + '"';
+	var Descricao = '"team.location"';
+	
+	$.support.cors = true;
+	$.mobile.allowCrossDomainPages = true;
+	
+	 $.ajax({
+                type: 'POST'
+                , url: "http://m2m.planetavirtual.pt/WebService/MobileM2M.asmx/Log"
+                , contentType: 'application/json; charset=utf-8'
+                , dataType: 'json'
+                , data: '{ "DispositivoID":' + DispositivoID + ',"Data":' + Data + ',"Message":' + Message + ',"Descricao":' + Descricao + ' }'
+				, crossDomain: true
+                , success: function (data, status) {
+                    //alert(data.d);
+                    RefreshHome();
+                    //alert("REF");
+                }
+                , error: function (xmlHttpRequest, status, err) {
+                    //alert(err.d);
+                }
+            });
+}
+
 function getLocation() 
 {
 	//alert("ENTROU LOCATION");
+	//alert("10");
 	$('#loader').show();
 	// Mostrar mapa
 	var Latit;
@@ -256,6 +292,9 @@ function getLocation()
 	}
 		
 	function displayPosition(position) {
+		//alert("11");
+		//alert(position.coords.latitude);
+		//alert(position.coords.longitude);
 		//alert("ENTROU DISPLAYPOSITION");
 		var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 		Latit = position.coords.latitude;
@@ -267,6 +306,7 @@ function getLocation()
 		// Colocar Coordenadas em var global
 		setCoord(Latit,Longit);
 		// Inserir BD
+		//alert("12");
 		Log((sessionStorage.getItem('sessionEstado')));
 		//Criar div após saber localização
 		//$('#divcontent').after('<div id="locationAddress"></div>');
@@ -438,6 +478,113 @@ function getLocationSemRedirect()
 			  } else {
 				alert("Geocoder failed due to: " + status);
 				$('#loader').hide();
+			  }
+			});
+	}
+}
+
+function getLocationRefresh() 
+{
+	//alert("1");
+	// Mostrar mapa
+	var Latit;
+	var Longit;
+		
+	if (navigator.geolocation) {
+		//alert("ENTROU NAVIGATOR");
+		var timeoutVal = 10 * 1000 * 1000;
+		navigator.geolocation.getCurrentPosition(
+			displayPosition, 
+			displayError,
+			{ enableHighAccuracy: true, timeout: timeoutVal, maximumAge: 0 }
+		);
+	}
+	else {
+		alert("Geolocation is not supported on this device.");
+	}
+		
+	function displayPosition(position) {
+		//alert("2");
+		//alert(position.coords.latitude);
+		//alert(position.coords.longitude);
+		//alert("ENTROU DISPLAYPOSITION");
+		//var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+		//alert(pos);
+		Latit = position.coords.latitude;
+		Longit = position.coords.longitude;
+		sessionStorage.setItem('sessionLat1', Latit);
+		sessionStorage.setItem('sessionLon1', Longit);
+		//alert(Latit);
+		//alert(Longit);
+		// Colocar Coordenadas em var global
+		setCoord(Latit,Longit);
+		// Inserir BD
+		//alert("3");
+		LogRefresh((sessionStorage.getItem('sessionEstado')));
+		//Criar div após saber localização
+		//$('#divcontent').after('<div id="locationAddress"></div>');
+		//$('#locationAddress').after('<br /><div id="map"></div>');
+		//$('#map').before('<br />');
+		//var options = {
+		//	zoom: 17,
+		//	center: pos,
+		//	mapTypeId: google.maps.MapTypeId.ROADMAP
+		//};
+		//var map = new google.maps.Map(document.getElementById("map"), options);
+		//var marker = new google.maps.Marker({
+		//	position: pos,
+		//	map: map,
+		//	title: "User location"
+		//});
+		//var contentString = "<b>Timestamp:</b> " + parseTimestamp(position.timestamp) + "<br/><b>User location:</b> lat " + position.coords.latitude + ", long " + position.coords.longitude + ", accuracy " + position.coords.accuracy;
+		//var infowindow = new google.maps.InfoWindow({
+		//	content: contentString
+		//});
+		//google.maps.event.addListener(marker, 'click', function() {
+		//	infowindow.open(map,marker);
+		//});
+		//var div_address = document.getElementById("locationAddress");
+		//var div_map = document.getElementById("map");
+		//div.parentNode.removeChild(div_address);
+		//div.parentNode.removeChild(div_map);
+		//geoCode();
+		//$('#loader').hide();
+	}
+	
+	function displayError(error) {
+			var errors = { 
+				1: 'Permission denied',
+				2: 'Position unavailable',
+				3: 'Request timeout'
+			};
+			alert("Error: " + errors[error.code]);
+	}
+	
+	function parseTimestamp(timestamp) {
+			var d = new Date(timestamp);
+			var day = d.getDate();
+			var month = d.getMonth() + 1;
+			var year = d.getFullYear();
+			var hour = d.getHours();
+			var mins = d.getMinutes();
+			var secs = d.getSeconds();
+			var msec = d.getMilliseconds();
+			return day + "." + month + "." + year + " " + hour + ":" + mins + ":" + secs + "," + msec;
+	}
+		
+	function geoCode() {
+			//alert("Entrou GeoCode.");
+			var geocoder = new google.maps.Geocoder();
+			var latlng = new google.maps.LatLng(Latitude, Longitude);
+			geocoder.geocode({'latLng': latlng}, function(results, status) {
+			  if (status == google.maps.GeocoderStatus.OK) {
+				address = results[0].formatted_address;
+				sessionStorage.setItem('sessionAddress', address);
+				//$('#locationAddress').append(address);
+				//infowindow.setContent(results[0].formatted_address);
+				//infowindow.open(map, marker);
+			  } else {
+				//alert("Geocoder failed due to: " + status);
 			  }
 			});
 	}
@@ -779,7 +926,7 @@ function CarregarHome()
 			
 			$('#loader').hide();
 			// Para qdo o estado é offline
-			if (sessionStorage.getItem('sessionEstado') == "Offline")
+			if (sessionStorage.getItem('sessionEstado') == "Offline" || _Estado == "Offline" )
 			{
 				if (userTime < 60)
 				{
@@ -906,7 +1053,10 @@ function GetUserLocation(_ID)
 	
 	//alert("AQUIIII");
 	// Colocar address
-	UserAddress = geoCode2(_Latitude, _Longitude);
+	if (_Estado != "Offline")
+	{
+		UserAddress = geoCode2(_Latitude, _Longitude);
+	}
 	
 	google.maps.event.addDomListener(window, 'load', GetUserLocation);
 }
@@ -1236,7 +1386,7 @@ function LoadUserInfo()
 	LoadButtonUser(_Estado);
 	
 	var tempo = sessionStorage.getItem('Tempo' + ID);
-	if (sessionStorage.getItem('sessionEstado') == "Offline")
+	if (sessionStorage.getItem('sessionEstado') == "Offline" || _Estado == "Offline")
 	{
 		$('#locationAddress').before('<div id="timeinfo"><p>' + tempo + 'm &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp distance unavailable</p></div>');
 	} else
@@ -1272,14 +1422,23 @@ function LoadTimer()
 {
 	window.setInterval(function(){
 		CallLog();
-	}, 5000);
+	}, 25000);
 }
 
 function CallLog()
 {
-	//var Estado = sessionStorage.getItem('sessionEstado');
-	//Log(Estado);
-	TesteLog();
+	var Estado = sessionStorage.getItem('sessionEstado');
+	if (Estado == "Offline")
+	{
+		Latitude = "unavailable";
+		Longitude = "unavailable";
+		LogRefresh(Estado);
+	} 
+	if (Estado == "Online" || Estado == "Ocupado")
+	{
+		getLocationRefresh();
+	}
+	//TesteLog();
 }
 
 function TesteLog()
